@@ -6,5 +6,11 @@
 
 **APIS:**
 
-- [Globals-全局属性](/apis/Globals.md)
-- [Expect-预计](/apis/Expect.md)
+- [Globals](/apis/Globals.md)
+- [Expect](/apis/Expect.md)
+- [Mock Functions](/apis/MockFunctions.md)
+- [The Jest Object](apis/TheJestObject.md)
+- [Configuring Jest](apis/ConfiguringJest.md)
+- [Jest CLI Options](apis/JestCliOptions.md)
+- [Environment Variables](apis/EnvironmentVariables.md)
+- [Code Transformation](apis/CodeTransformation.md)

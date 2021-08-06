@@ -1,10 +1,10 @@
-# Globals - 全局方法
+# Globals
 
 在您的测试文件中，Jest 将这些方法和对象都放入全局环境中。您不必 request 或 import 任何东西即可使用它们。但是如果您更喜欢显式导入，则可以使用 `import {descirbe, expect, test} from '@jest/globals'` 导入。
 
 ## Methods - 方法
 
-- [Globals - 全局方法](#globals---全局方法)
+- [Globals](#globals)
   - [Methods - 方法](#methods---方法)
     - [`afterAll(fn, timeout)`](#afterallfn-timeout)
     - [`afterEach(fn, timeout)`](#aftereachfn-timeout)
@@ -877,3 +877,5 @@ const add = (a, b) => a + b;
 
 test.todo("add should be associative");
 ```
+
+[下一章-Expect](/apis/Expect.md)
