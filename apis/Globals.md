@@ -4,29 +4,31 @@
 
 ## Methods - 方法
 
-- [Globals](#globals)
-  - [Methods - 方法](#methods---方法)
-    - [`afterAll(fn, timeout)`](#afterallfn-timeout)
-    - [`afterEach(fn, timeout)`](#aftereachfn-timeout)
-    - [`beforeAll(fn, timeout)`](#beforeallfn-timeout)
-    - [`beforeEach(fn, timeout)`](#beforeeachfn-timeout)
-    - [`describe(name, fn)`](#describename-fn)
-    - [`describe.each(table)(name, fn, timeout)`](#describeeachtablename-fn-timeout)
-    - [`describe.only(name, fn)`](#describeonlyname-fn)
-    - [`describe.only.each(table)(name, fn)`](#describeonlyeachtablename-fn)
-    - [`describe.skip(name, fn)`](#describeskipname-fn)
-    - [`describe.only.skip(table)(name, fn)`](#describeonlyskiptablename-fn)
-    - [`test(name, fn, timeout)`](#testname-fn-timeout)
-    - [`test.concurrent(name, fn, timeout)`](#testconcurrentname-fn-timeout)
-    - [`test.concurrent.each(table)(name, fn, timeout)`](#testconcurrenteachtablename-fn-timeout)
-    - [`test.concurrent.only.each(table)(name, fn)`](#testconcurrentonlyeachtablename-fn)
-    - [`test.concurrent.skip.each(table)(name, fn)`](#testconcurrentskipeachtablename-fn)
-    - [`test.each(table)(name, fn, timeout)`](#testeachtablename-fn-timeout)
-    - [`test.only(name, fn, timeout)`](#testonlyname-fn-timeout)
-    - [`test.only.each(table)(name, fn)`](#testonlyeachtablename-fn)
-    - [`test.skip(name, fn)`](#testskipname-fn)
-    - [`test.skip.each(table)(name, fn)`](#testskipeachtablename-fn)
-    - [`test.todo(name)`](#testtodoname)
+- [`afterAll(fn, timeout)`](#afterallfn-timeout)
+- [`afterEach(fn, timeout)`](#aftereachfn-timeout)
+- [`beforeAll(fn, timeout)`](#beforeallfn-timeout)
+- [`beforeEach(fn, timeout)`](#beforeeachfn-timeout)
+- [`describe(name, fn)`](#describename-fn)
+- [`describe.each(table)(name, fn, timeout)`](#describeeachtablename-fn-timeout)
+- [`describe.only(name, fn)`](#describeonlyname-fn)
+- [`describe.only.each(table)(name, fn)`](#describeonlyeachtablename-fn)
+- [`describe.skip(name, fn)`](#describeskipname-fn)
+- [`describe.only.skip(table)(name, fn)`](#describeonlyskiptablename-fn)
+- [`test(name, fn, timeout)`](#testname-fn-timeout)
+- [`test.concurrent(name, fn, timeout)`](#testconcurrentname-fn-timeout)
+- [`test.concurrent.each(table)(name, fn, timeout)`](#testconcurrenteachtablename-fn-timeout)
+- [`test.concurrent.only.each(table)(name, fn)`](#testconcurrentonlyeachtablename-fn)
+- [`test.concurrent.skip.each(table)(name, fn)`](#testconcurrentskipeachtablename-fn)
+- [`test.each(table)(name, fn, timeout)`](#testeachtablename-fn-timeout)
+- [`test.only(name, fn, timeout)`](#testonlyname-fn-timeout)
+- [`test.only.each(table)(name, fn)`](#testonlyeachtablename-fn)
+- [`test.skip(name, fn)`](#testskipname-fn)
+- [`test.skip.each(table)(name, fn)`](#testskipeachtablename-fn)
+- [`test.todo(name)`](#testtodoname)
+
+---
+
+## Reference - 参考
 
 **_注：`timeout` 作用是指定在中止之前等待的时间（以毫秒为单位），所有的 `timeout` 默认均为 5s，后面不再单独说明_**
 
