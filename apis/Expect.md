@@ -43,6 +43,17 @@
 - [`.toBeGreaterThan(number | bigint)`](#tobegreaterthannumber--bigint)
 - [`.toBeGreaterThanOrEqual(number | bigint)`](#tobegreaterthanorequalnumber--bigint)
 - [`.toBeLessThan(number | bigint)`](#tobelessthannumber--bigint)
+- [`.toBeLessThanOrEqual(number | bigint)`](#tobelessthanorequalnumber--bigint)
+- [`.toBeInstanceOf(Class)`](#tobeinstanceofclass)
+- [`.toBeNull()`](#tobenull)
+- [`.toBeTruthy()`](#tobetruthy)
+- [`.toBeUndefined()`](#tobeundefined)
+- [`.toBeNaN()`](#tobenan)
+- [`.toContain(item)`](#tocontainitem)
+- [`.toContainEqual(item)`](#tocontainequalitem)
+- [`.toEqual(value)`](#toequalvalue)
+- [`.toMatch(regexp | string)`](#tomatchregexp--string)
+- [`.toMatchObject(object)`](#tomatchobjectobject)
 
 ---
 
@@ -1028,7 +1039,7 @@ test("drinking La Croix does not lead to errors", () => {
 使用 `toBeGreaterThan` 比较 `收到的 > 预期的` 数字或大整数值。
 
 ```javascript
-// ouncesPerCan() 中的值是否超过 10
+// ouncesPerCan() 的值是否超过 10
 test("ounces per can is more than 10", () => {
   expect(ouncesPerCan()).toBeGreaterThan(10);
 });
@@ -1039,8 +1050,8 @@ test("ounces per can is more than 10", () => {
 使用 `toBeGreaterThanOrEqual` 比较 `收到的 >= 预期的` 数字或大整数值。
 
 ```javascript
-// ouncesPerCan() 中的值大于等于 12
-test('ounces per can is at least 12', () => {
+// ouncesPerCan() 的值大于等于 12
+test("ounces per can is at least 12", () => {
   expect(ouncesPerCan()).toBeGreaterThanOrEqual(12);
 });
 ```
@@ -1050,8 +1061,226 @@ test('ounces per can is at least 12', () => {
 使用 `toBeLessThan` 比较 `收到的 < 预期的` 数字或大整数值。
 
 ```javascript
-// ouncesPerCan() 中的值小于 20
-test('ounces per can is less than 20', () => {
+// ouncesPerCan() 的值小于 20
+test("ounces per can is less than 20", () => {
   expect(ouncesPerCan()).toBeLessThan(20);
+});
+```
+
+### `.toBeLessThanOrEqual(number | bigint)`
+
+使用 `toBeLessThanOrEqual` 比较 `收到的 <= 预期的` 数字或大整数值。
+
+```javascript
+// ouncesPerCan() 的值小于等于12
+test("ounces per can is at most 12", () => {
+  expect(ouncesPerCan()).toBeLessThanOrEqual(12);
+});
+```
+
+### `.toBeInstanceOf(Class)`
+
+使用 `.toBeInstanceOf(Class)` 检查对象是否是类的实例。`instanceof` 在这个匹配器下面使用。
+
+```javascript
+class A {}
+
+expect(new A()).toBeInstanceOf(A);
+expect(() => {}).toBeInstanceOf(Function);
+expect(new A()).toBeInstanceOf(Function); // throws
+```
+
+### `.toBeNull()`
+
+`.toBeNull()` 跟 `.toBe(null)` 相等，但是它的错误信息会更好一些。所以你想检查某些内容是否为空时，使用 `.toBeNull()`
+
+```javascript
+function bloop() {
+  return null;
+}
+
+test("bloop returns null", () => {
+  expect(bloop()).toBeNull();
+});
+```
+
+### `.toBeTruthy()`
+
+当你不关心测试的值的内容只想确保在布尔值中表示为 true 时，请使用 `.toBeTruthy()`。例如有如下代码：
+
+```javascript
+drinkSomeLaCroix();
+if (thirstInfo()) {
+  drinkMoreLaCroix();
+}
+```
+
+你可能不在乎 `thirstInfo` 返回什么，特别是 - 它可能返回 `true` 或一个复杂的对象，而且你的代码仍然可以工作。因此，如果你想在 `drinkSomeLaCroix` 后测试 `thirstInfo` 是否为真，你可以这样写：
+
+```javascript
+test("drinking La Croix leads to having thirst info", () => {
+  drinkSomeLaCroix();
+  expect(thirstInfo()).toBeTruthy();
+});
+```
+
+在 JavaScript 中，存在六个假值：`false`, `0`, `''`, `null`, `undefined` 和 `NaN`，其它的均为真值。
+
+### `.toBeUndefined()`
+
+使用 `.toBeUndefined` 检查变量是否 `undefined（未定义）`。例如，如果你想检查函数 `bestDrinkForFlavor('octopus')` 返回 `undefined`：
+
+```javascript
+test("the best drink for octopus flavor is undefined", () => {
+  expect(bestDrinkForFlavor("octopus")).toBeUndefined();
+});
+```
+
+你可以编写 `expect(bestDrinkForFlavor('octopus')).toBe(undefined)`，但最好避免在代码中直接引用 `undefined`。
+
+### `.toBeNaN()`
+
+使用 `.toBeNaN()` 判断值是 `NaN`。
+
+```javascript
+test("passes when value is NaN", () => {
+  expect(NaN).toBeNaN();
+  expect(1).not.toBeNaN();
+});
+```
+
+### `.toContain(item)`
+
+当你想检查一个项目是否存在于数组中时，请使用 `.toContain`。为了测试数组中的项目，这使用 `===` 严格的相等检查。 `.toContain` 还可以检查一个字符串是否是另一个字符串的子字符串。
+
+例如，如果 `getAllFlavors()` 返回一个数组，并且你想确保里面有 `lime`，你可以这样写：
+
+```javascript
+test("the flavor list contains lime", () => {
+  expect(getAllFlavors()).toContain("lime");
+});
+```
+
+### `.toContainEqual(item)`
+
+当你想要检查具有特定的结构和值的项目是否包含在数组中时，请使用 `.toContainEqual`。为了测试数组中的项目，这个匹配器会递归地检查所有字段的相等性，而不是检查对象的身份。
+
+```javascript
+describe("my beverage", () => {
+  test("is delicious and not sour", () => {
+    const myBeverage = { delicious: true, sour: false };
+    expect(myBeverages()).toContainEqual(myBeverage);
+  });
+});
+```
+
+### `.toEqual(value)`
+
+使用 `.toEqual` 递归比较对象实例的所有属性。它调用 `Object.is` 来比较原始值，这比 `===` 严格相等操作更适合测试。
+
+举个例子，在这个测试套件中 `toEqual` 和 `toBe` 表现不同，所以所有测试都通过了：
+
+```javascript
+const can1 = {
+  flavor: "grapefruit",
+  ounces: 12,
+};
+const can2 = {
+  flavor: "grapefruit",
+  ounces: 12,
+};
+
+describe("the La Croix cans on my desk", () => {
+  // 具有完全相同的属性
+  test("have all the same properties", () => {
+    expect(can1).toEqual(can2);
+  });
+  // 不完全一样
+  test("are not the exact same can", () => {
+    expect(can1).not.toBe(can2);
+  });
+});
+```
+
+> 注意：`.toEqual` 不会对两个错误执行深度相等检查。只有 Error 的 `message` 属性被认为是相等的。建议使用 `.toThrow` 匹配器来测试错误。
+
+如果属性之间的差异不能帮助你理解测试失败的原因，尤其是在报告很大的情况下，那么你可以将比较移到 expect 函数中。例如，使用 `Buffer` 类的 `equals` 方法来断言缓冲区是否包含相同的内容：
+
+- 将 `expect(received).toEqual(expected)` 替换为 `expect(received.equals(expected)).toBe(true)`
+- 将 `expect(received).not.toEqual(expected)` 替换为 `expect(received.equals(expected)).toBe(false)`
+
+### `.toMatch(regexp | string)`
+
+使用 `.toMatch` 检查字符串是否与正则表达式匹配。
+
+比如你可能不知道 `essayOnTheBestFlavor()` 返回的究竟是什么，但你知道它是一个非常长的字符串，并且子字符串中含有 `grapefruit`。你可以使用以下方法进行测试：
+
+```javascript
+describe("an essay on the best flavor", () => {
+  test("mentions grapefruit", () => {
+    expect(essayOnTheBestFlavor()).toMatch(/grapefruit/);
+    expect(essayOnTheBestFlavor()).toMatch(new RegExp("grapefruit"));
+  });
+});
+```
+
+这个匹配器也可以接受一个字符串：
+
+```javascript
+describe("grapefruits are healthy", () => {
+  test("grapefruits are a fruit", () => {
+    expect("grapefruits").toMatch("fruit");
+  });
+});
+```
+
+### `.toMatchObject(object)`
+
+使用 `.toMatchObject` 检查 JavaScript 对象是否与对象的属性子集匹配。它会将接收到的对象与**不在预期对象中的属性**进行匹配。
+
+你还可以传递一个对象数组，这种情况下，只有当接收到的数组中的每个对象都匹配（在上述 `toMatchObject` 意义上）预期数组中的对应对象时，该方法才会返回 `true`。如果你想检查两个数组的元素数量是否匹配时这很有用，而不是 `arrayContaining`，它允许接收数组中的额外元素。
+
+你可以将属性与值或匹配器进行匹配。
+
+```javascript
+const houseForSale = {
+  bath: true,
+  bedrooms: 4,
+  kitchen: {
+    amenities: ["oven", "stove", "washer"],
+    area: 20,
+    wallColor: "white",
+  },
+};
+const desiredHouse = {
+  bath: true,
+  kitchen: {
+    amenities: ["oven", "stove", "washer"],
+    wallColor: expect.stringMatching(/white|yellow/),
+  },
+};
+
+test("the house has my desired features", () => {
+  expect(houseForSale).toMatchObject(desiredHouse);
+});
+```
+
+```javascript
+describe("toMatchObject applied to arrays", () => {
+  // 元素的数量必须完全匹配
+  test("the number of elements must match exactly", () => {
+    expect([{ foo: "bar" }, { baz: 1 }]).toMatchObject([
+      { foo: "bar" },
+      { baz: 1 },
+    ]);
+  });
+
+  // toMatchObject 为每个元素调用，所以可以存在额外的对象属性
+  test(".toMatchObject is called for each elements, so extra object properties are okay", () => {
+    expect([{ foo: "bar" }, { baz: 1, extra: "quux" }]).toMatchObject([
+      { foo: "bar" },
+      { baz: 1 },
+    ]);
+  });
 });
 ```
