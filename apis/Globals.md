@@ -1,40 +1,42 @@
-# Globals - 全局方法
+# Globals
 
-在您的测试文件中，Jest 将这些方法和对象都放入全局环境中。您不必 request 或 import 任何东西即可使用它们。但是如果您更喜欢显式导入，则可以使用 `import {descirbe, expect, test} from '@jest/globals'` 导入。
+在你的测试文件中，Jest 将这些方法和对象都放入全局环境中。你不必 request 或 import 任何东西即可使用它们。但是如果你更喜欢显式导入，则可以使用 `import {descirbe, expect, test} from '@jest/globals'` 导入。
 
 ## Methods - 方法
 
-- [Globals - 全局方法](#globals---全局方法)
-  - [Methods - 方法](#methods---方法)
-    - [`afterAll(fn, timeout)`](#afterallfn-timeout)
-    - [`afterEach(fn, timeout)`](#aftereachfn-timeout)
-    - [`beforeAll(fn, timeout)`](#beforeallfn-timeout)
-    - [`beforeEach(fn, timeout)`](#beforeeachfn-timeout)
-    - [`describe(name, fn)`](#describename-fn)
-    - [`describe.each(table)(name, fn, timeout)`](#describeeachtablename-fn-timeout)
-    - [`describe.only(name, fn)`](#describeonlyname-fn)
-    - [`describe.only.each(table)(name, fn)`](#describeonlyeachtablename-fn)
-    - [`describe.skip(name, fn)`](#describeskipname-fn)
-    - [`describe.only.skip(table)(name, fn)`](#describeonlyskiptablename-fn)
-    - [`test(name, fn, timeout)`](#testname-fn-timeout)
-    - [`test.concurrent(name, fn, timeout)`](#testconcurrentname-fn-timeout)
-    - [`test.concurrent.each(table)(name, fn, timeout)`](#testconcurrenteachtablename-fn-timeout)
-    - [`test.concurrent.only.each(table)(name, fn)`](#testconcurrentonlyeachtablename-fn)
-    - [`test.concurrent.skip.each(table)(name, fn)`](#testconcurrentskipeachtablename-fn)
-    - [`test.each(table)(name, fn, timeout)`](#testeachtablename-fn-timeout)
-    - [`test.only(name, fn, timeout)`](#testonlyname-fn-timeout)
-    - [`test.only.each(table)(name, fn)`](#testonlyeachtablename-fn)
-    - [`test.skip(name, fn)`](#testskipname-fn)
-    - [`test.skip.each(table)(name, fn)`](#testskipeachtablename-fn)
-    - [`test.todo(name)`](#testtodoname)
+- [`afterAll(fn, timeout)`](#afterallfn-timeout)
+- [`afterEach(fn, timeout)`](#aftereachfn-timeout)
+- [`beforeAll(fn, timeout)`](#beforeallfn-timeout)
+- [`beforeEach(fn, timeout)`](#beforeeachfn-timeout)
+- [`describe(name, fn)`](#describename-fn)
+- [`describe.each(table)(name, fn, timeout)`](#describeeachtablename-fn-timeout)
+- [`describe.only(name, fn)`](#describeonlyname-fn)
+- [`describe.only.each(table)(name, fn)`](#describeonlyeachtablename-fn)
+- [`describe.skip(name, fn)`](#describeskipname-fn)
+- [`describe.only.skip(table)(name, fn)`](#describeonlyskiptablename-fn)
+- [`test(name, fn, timeout)`](#testname-fn-timeout)
+- [`test.concurrent(name, fn, timeout)`](#testconcurrentname-fn-timeout)
+- [`test.concurrent.each(table)(name, fn, timeout)`](#testconcurrenteachtablename-fn-timeout)
+- [`test.concurrent.only.each(table)(name, fn)`](#testconcurrentonlyeachtablename-fn)
+- [`test.concurrent.skip.each(table)(name, fn)`](#testconcurrentskipeachtablename-fn)
+- [`test.each(table)(name, fn, timeout)`](#testeachtablename-fn-timeout)
+- [`test.only(name, fn, timeout)`](#testonlyname-fn-timeout)
+- [`test.only.each(table)(name, fn)`](#testonlyeachtablename-fn)
+- [`test.skip(name, fn)`](#testskipname-fn)
+- [`test.skip.each(table)(name, fn)`](#testskipeachtablename-fn)
+- [`test.todo(name)`](#testtodoname)
 
-**_注：`timeout` 作用是指定在中止之前等待的时间（以毫秒为单位），所有的 `timeout` 默认均为 5s，后面不再单独说明_**
+---
+
+## Reference - 参考
+
+**_注_：`timeout` 作用是指定在中止之前等待的时间（以毫秒为单位），所有的 `timeout` 默认均为 5s，后面不再单独说明。**
 
 ### `afterAll(fn, timeout)`
 
 在所有测试完成后运行一个功能，如果函数返回的是 promise 或 generator，则会等待该异步完成再继续。
 
-如果您想清理一些跨测试共享的全局设置状态，这通常很有用。
+如果你想清理一些跨测试共享的全局设置状态，这通常很有用。
 
 举例：
 
@@ -71,7 +73,7 @@ test("can insert a thing", () => {
 
 在每个测试完成后都运行一个功能，如果函数返回的是 promise 或 generator，则会等待该异步完成再继续。
 
-如果您想清理每个测试创建的一些临时状态，这通常很有用。
+如果你想清理每个测试创建的一些临时状态，这通常很有用。
 
 举例：
 
@@ -102,13 +104,13 @@ test("can insert a thing", () => {
 
 如果 `afterEach` 在 `describe` 内，则它仅在此 `describe` 块内的测试之后运行。
 
-如果您只想在所有测试运行后运行一次清理，请改用 `afterAll`。
+如果你只想在所有测试运行后运行一次清理，请改用 `afterAll`。
 
 ### `beforeAll(fn, timeout)`
 
 在所有测试执行前运行一个功能，如果函数返回的是 promise 或 generator，则会等待该异步完成再继续。
 
-如果您想设置一些将被许多测试使用的全局状态，这通常很有用。
+如果你想设置一些将被许多测试使用的全局状态，这通常很有用。
 
 举例：
 
@@ -142,7 +144,7 @@ test("can find things", () => {
 
 在每个测试开始前都运行一个功能，如果函数返回的是 promise 或 generator，则会等待该异步完成再继续。
 
-如果您想重置一些将被许多测试使用的全局状态，这通常很有用。
+如果你想重置一些将被许多测试使用的全局状态，这通常很有用。
 
 举例：
 
@@ -174,7 +176,7 @@ test("can insert a thing", () => {
 
 如果 `beforeEach` 在 `describe` 内，它会针对 `describe` 中的每个测试运行。
 
-如果您只需要运行一些设置代码，在任何测试运行之前，请改用 `beforeAll`。
+如果你只需要运行一些设置代码，在任何测试运行之前，请改用 `beforeAll`。
 
 ### `describe(name, fn)`
 
@@ -199,7 +201,7 @@ describe("my beverage", () => {
 });
 ```
 
-_这不是必要的：可以在顶层编写测试块，如果想要将测试组织成组，使用 `describe` 会很方便。_
+_这不是必要的_：可以在顶层编写测试块，如果想要将测试组织成组，使用 `describe` 会很方便。
 
 如果希望有层次的测试结构，也可以嵌套 `describe`：
 
@@ -233,7 +235,7 @@ describe("binaryStringToNumber", () => {
 
 ### `describe.each(table)(name, fn, timeout)`
 
-如果您不断使用不同的数据复制相同的测试套件，请使用 `describe.each`。 `describe.each` 允许您编写一次测试套件并传入数据。
+如果你不断使用不同的数据复制相同的测试套件，请使用 `describe.each`。 `describe.each` 允许你编写一次测试套件并传入数据。
 
 `describe.each` 提供两个 API：
 
@@ -306,7 +308,7 @@ describe.each([
   - 变量名列标题的第一行用 `|` 分隔
   - 使用 `${value}` 语法作为模板文字表达式提供的一个或多个后续数据行
 - `name`: `String` 测试套件的标题，使用 `$variable` 从标记的模板表达式中将测试数据注入套件标题，并使用 `$#` 作为行的索引。
-  - 要注入嵌套对象值，您可以提供一个 `keyPath`，即 `$variable.path.to.value`
+  - 要注入嵌套对象值，你可以提供一个 `keyPath`，即 `$variable.path.to.value`
 
 举例：
 
@@ -357,7 +359,7 @@ describe("my other beverage", () => {
 
 别名：`fdescribe.each(table)(name, fn)` 和 `` fdescribe.each`table`(name, fn) ``
 
-如果您只想运行数据驱动测试的特定测试套件请使用 `describe.only.each`
+如果你只想运行数据驱动测试的特定测试套件请使用 `describe.only.each`
 
 `describe.only.each` 提供两个 API：
 
@@ -402,7 +404,7 @@ test("will not be ran", () => {
 
 别名：`xdescribe(name, fn)`
 
-如果您不想运行特定的描述块，可以使用`describe.skip`
+如果你不想运行特定的描述块，可以使用`describe.skip`
 
 ```javascript
 describe("my beverage", () => {
@@ -426,7 +428,7 @@ describe.skip("my other beverage", () => {
 
 别名：`xdescribe.each(table)(name, fn)` 和 `xdescribe.each`table`(name, fn)`
 
-如果您想停止运行一套数据驱动测试，请使用 `describe.skip.each`。
+如果你想停止运行一套数据驱动测试，请使用 `describe.skip.each`。
 
 `describe.skip.each` 提供两个 API：
 
@@ -471,7 +473,7 @@ test("will be ran", () => {
 
 别名：`it(name, fn, timeout)`。
 
-在测试文件中您需要的只是运行测试的 `test` 方法。例如，假设有一个函数 `inchesOfRain()` 应该为零。您的整个测试可能是：
+在测试文件中你需要的只是运行测试的 `test` 方法。例如，假设有一个函数 `inchesOfRain()` 应该为零。你的整个测试可能是：
 
 ```javascript
 test("did not rain", () => {
@@ -481,9 +483,9 @@ test("did not rain", () => {
 
 第一个参数是测试名称；第二个参数是一个包含要测试的函数。
 
-> 注意：如果测试返回了一个 promise，Jest 将等待 promise 的 resolve，然后让测试完成。如果您向测试函数提供参数，通常称为 done，Jest 也会等待。当您想测试回调时这会很方便。在[此处](https://www.jestjs.cn/docs/asynchronous#callbacks)查看如何测试异步代码。
+> 注意：如果测试返回了一个 promise，Jest 将等待 promise 的 resolve，然后让测试完成。如果你向测试函数提供参数，通常称为 done，Jest 也会等待。当你想测试回调时这会很方便。在[此处](https://www.jestjs.cn/docs/asynchronous#callbacks)查看如何测试异步代码。
 
-例如，假设 `fetchBeverageList()` 返回一个 promise，该 promise 应该解析为一个包含 `lemon` 的列表。您可以使用以下方法进行测试：
+例如，假设 `fetchBeverageList()` 返回一个 promise，该 promise 应该解析为一个包含 `lemon` 的列表。你可以使用以下方法进行测试：
 
 ```javascript
 test("has lemon in it", () => {
@@ -523,7 +525,7 @@ test.concurrent("subtraction 2 numbers", async () => {
 
 别名：`it.concurrent.each(table)(name, fn, timeout)`
 
-如果您不断用不同的数据重复相同的测试，请使用 `test.concurrent.each`。`test.each` 允许你编写一次测试并传入数据，测试都是异步运行的。
+如果你不断用不同的数据重复相同的测试，请使用 `test.concurrent.each`。`test.each` 允许你编写一次测试并传入数据，测试都是异步运行的。
 
 `test.concurrent.each` 提供两个 API：
 
@@ -562,7 +564,7 @@ test.concurrent.each([
   - 变量名列标题的第一行用 `|` 分隔
   - 使用 `${value}` 语法作为模板文字表达式提供的一个或多个后续数据行
 - `name`: `String` 测试套件的标题，使用 `$variable` 从标记的模板表达式中将测试数据注入套件标题，并使用 `$#` 作为行的索引。
-  - 要注入嵌套对象值，您可以提供一个 `keyPath`，即 `$variable.path.to.value`
+  - 要注入嵌套对象值，你可以提供一个 `keyPath`，即 `$variable.path.to.value`
 - `fn`: `Function` 要运行的测试套件，这将接收每一行中的参数作为函数参数的函数，**这必须是一个异步函数**。
 
 举例：
@@ -664,7 +666,7 @@ test("will be ran", () => {
 
 别名：`it.each(table)(name, fn)` 和 `it.each`table`(name, fn)`
 
-如果您不断用不同的数据重复相同的测试，请使用 `test.each`。`test.each` 允许您编写一次测试并传入数据。
+如果你不断用不同的数据重复相同的测试，请使用 `test.each`。`test.each` 允许你编写一次测试并传入数据。
 
 `test.each` 提供两个 API：
 
@@ -717,7 +719,7 @@ test.each([
   - 变量名列标题的第一行用 `|` 分隔
   - 使用 `${value}` 语法作为模板文字表达式提供的一个或多个后续数据行
 - `name`: `String` 测试套件的标题，使用 `$variable` 从标记的模板表达式中将测试数据注入套件标题，并使用 `$#` 作为行的索引。
-  - 要注入嵌套对象值，您可以提供一个 `keyPath`，即 `$variable.path.to.value`
+  - 要注入嵌套对象值，你可以提供一个 `keyPath`，即 `$variable.path.to.value`
 
 举例：
 
@@ -736,7 +738,7 @@ test.each`
 
 别名：`it.only(name, fn, timeout)` 和 `fit(name, fn, timeout)`
 
-当您调试大型测试文件时，您通常只想运行测试的子集。您可以使用 `.only` 指定哪些测试是您要在该测试文件中运行的唯一测试。
+当你调试大型测试文件时，你通常只想运行测试的子集。你可以使用 `.only` 指定哪些测试是你要在该测试文件中运行的唯一测试。
 
 举个例子，假设运行了以下测试：
 
@@ -753,13 +755,13 @@ test("it is not snowing", () => {
 
 这里只会执行“it is raining”，因为它使用了 `test.only`
 
-通常情况下，您不会使用 `test.only` 将代码推到主干分支中 - 您使用它进行调试，并在修复损坏的测试后将其删除。
+通常情况下，你不会使用 `test.only` 将代码推到主干分支中 - 你使用它进行调试，并在修复损坏的测试后将其删除。
 
 ### `test.only.each(table)(name, fn)`
 
 别名：`it.only.each(table)(name, fn)`, `fit.each(table)(name, fn)`, `` it.only.each`table`(name, fn) `` 和 `` fit.each`table`(name, fn) ``
 
-如果您只想运行具有不同测试数据的特定测试，可以使用 `test.only.each`
+如果你只想运行具有不同测试数据的特定测试，可以使用 `test.only.each`
 
 `test.only.each` 提供两个 API：
 
@@ -800,7 +802,7 @@ test("will not be ran", () => {
 
 别名：`it.skip(name, fn)`, `xit(name, fn)` 和 `xtest(name, fn)`
 
-当您维护大型代码库时，您有时可能会发现某个测试由于某种原因暂时中断。如果您想跳过运行此测试，但又不想删除此代码，则可以使用 `test.skip` 指定要跳过的一些测试。
+当你维护大型代码库时，你有时可能会发现某个测试由于某种原因暂时中断。如果你想跳过运行此测试，但又不想删除此代码，则可以使用 `test.skip` 指定要跳过的一些测试。
 
 举个例子，假设有这些测试：
 
@@ -817,13 +819,13 @@ test.skip("it is not snowing", () => {
 
 只会执行“it is raining”，因为其它的测试使用了 `test.skip`
 
-您可以将测试注释掉，但使用 `test.skip` 通常会更好一些，因为它会保持缩进和语法突出显示。
+你可以将测试注释掉，但使用 `test.skip` 通常会更好一些，因为它会保持缩进和语法突出显示。
 
 ### `test.skip.each(table)(name, fn)`
 
 别名：`it.skip.each(table)(name, fn)`, `xit.each(table)(name, fn)`, `xtest.each(table)(name, fn)`, `` it.skip.each`table`(name, fn) ``, `` xit.each`table`(name, fn) `` 和 `` xtest.each`table`(name, fn) ``
 
-如果您想停止运行一组数据驱动的测试，可以使用 `test.skip.each`
+如果你想停止运行一组数据驱动的测试，可以使用 `test.skip.each`
 
 `test.skip.each` 提供两个 API：
 
@@ -864,9 +866,9 @@ test("will be ran", () => {
 
 别名：`it.todo(name)`
 
-当您计划编写测试时，使用 `test.todo`。这些测试将在最后的摘要输出中突出显示，以便您知道还需要执行多少测试。
+当你计划编写测试时，使用 `test.todo`。这些测试将在最后的摘要输出中突出显示，以便你知道还需要执行多少测试。
 
-注意：如果你提供了一个测试回调函数，那么 `test.todo` 会抛出一个错误。如果您已经实现了测试并且它已损坏且不希望它运行，那么请改用 `test.skip`。
+注意：如果你提供了一个测试回调函数，那么 `test.todo` 会抛出一个错误。如果你已经实现了测试并且它已损坏且不希望它运行，那么请改用 `test.skip`。
 
 `name`: 计划测试的标题。
 
@@ -877,3 +879,5 @@ const add = (a, b) => a + b;
 
 test.todo("add should be associative");
 ```
+
+[下一章-Expect](/apis/Expect.md)
