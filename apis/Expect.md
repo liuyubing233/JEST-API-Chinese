@@ -6,58 +6,60 @@
 
 ## methods - 方法
 
-- [Expect（预期）](#expect预期)
-  - [methods - 方法](#methods---方法)
-  - [Reference - 参考](#reference---参考)
-    - [`expect(value)`](#expectvalue)
-    - [`expect.extend(matchers)`](#expectextendmatchers)
-    - [`expect.anything()`](#expectanything)
-    - [`expect.any(constructor)`](#expectanyconstructor)
-    - [`expect.arrayContaining(array)`](#expectarraycontainingarray)
-    - [`expect.assertions(number)`](#expectassertionsnumber)
-    - [`expect.hasAssertions()`](#expecthasassertions)
-    - [`expect.not.arrayContaining(array)`](#expectnotarraycontainingarray)
-    - [`expect.not.objectContaining(object)`](#expectnotobjectcontainingobject)
-    - [`expect.not.stringContaining(string)`](#expectnotstringcontainingstring)
-    - [`expect.not.stringMatching(string | regexp)`](#expectnotstringmatchingstring--regexp)
-    - [`expect.objectContaining(object)`](#expectobjectcontainingobject)
-    - [`expect.stringContaining(string)`](#expectstringcontainingstring)
-    - [`expect.stringMatching(string | regexp)`](#expectstringmatchingstring--regexp)
-    - [`expect.addSnapshotSerializer(serializer)`](#expectaddsnapshotserializerserializer)
-    - [`.not`](#not)
-    - [`.resolves`](#resolves)
-    - [`.rejects`](#rejects)
-    - [`.toBe(value)`](#tobevalue)
-    - [`.toHaveBeenCalled()`](#tohavebeencalled)
-    - [`.toHaveBeenCalledTimes(number)`](#tohavebeencalledtimesnumber)
-    - [`.toHaveBeenCalledWith(arg1, arg2, ...)`](#tohavebeencalledwitharg1-arg2-)
-    - [`.toHaveBeenLastCalledWith(arg1, arg2, ...)`](#tohavebeenlastcalledwitharg1-arg2-)
-    - [`.toHaveBeenNthCalledWith(nthCall, arg1, arg2, ....)`](#tohavebeennthcalledwithnthcall-arg1-arg2-)
-    - [`.toHaveReturned()`](#tohavereturned)
-    - [`.toHaveReturnedTimes(number)`](#tohavereturnedtimesnumber)
-    - [`.toHaveReturnedWith(value)`](#tohavereturnedwithvalue)
-    - [`.toHaveLastReturnedWith(value)`](#tohavelastreturnedwithvalue)
-    - [`.toHaveNthReturnedWith(nthCall, value)`](#tohaventhreturnedwithnthcall-value)
-    - [`.toHaveLength(number)`](#tohavelengthnumber)
-    - [`.toHaveProperty(keyPath, value?)`](#tohavepropertykeypath-value)
-    - [`.toBeCloseTo(number, numDigits?)`](#tobeclosetonumber-numdigits)
-    - [`.toBeDefined()`](#tobedefined)
-    - [`.toBeFalsy()`](#tobefalsy)
-    - [`.toBeGreaterThan(number | bigint)`](#tobegreaterthannumber--bigint)
-    - [`.toBeGreaterThanOrEqual(number | bigint)`](#tobegreaterthanorequalnumber--bigint)
-    - [`.toBeLessThan(number | bigint)`](#tobelessthannumber--bigint)
-    - [`.toBeLessThanOrEqual(number | bigint)`](#tobelessthanorequalnumber--bigint)
-    - [`.toBeInstanceOf(Class)`](#tobeinstanceofclass)
-    - [`.toBeNull()`](#tobenull)
-    - [`.toBeTruthy()`](#tobetruthy)
-    - [`.toBeUndefined()`](#tobeundefined)
-    - [`.toBeNaN()`](#tobenan)
-    - [`.toContain(item)`](#tocontainitem)
-    - [`.toContainEqual(item)`](#tocontainequalitem)
-    - [`.toEqual(value)`](#toequalvalue)
-    - [`.toMatch(regexp | string)`](#tomatchregexp--string)
-    - [`.toMatchObject(object)`](#tomatchobjectobject)
-    - [`.toMatchSnapshot(propertyMatchers?, hint?)`](#tomatchsnapshotpropertymatchers-hint)
+- [`expect(value)`](#expectvalue)
+- [`expect.extend(matchers)`](#expectextendmatchers)
+- [`expect.anything()`](#expectanything)
+- [`expect.any(constructor)`](#expectanyconstructor)
+- [`expect.arrayContaining(array)`](#expectarraycontainingarray)
+- [`expect.assertions(number)`](#expectassertionsnumber)
+- [`expect.hasAssertions()`](#expecthasassertions)
+- [`expect.not.arrayContaining(array)`](#expectnotarraycontainingarray)
+- [`expect.not.objectContaining(object)`](#expectnotobjectcontainingobject)
+- [`expect.not.stringContaining(string)`](#expectnotstringcontainingstring)
+- [`expect.not.stringMatching(string | regexp)`](#expectnotstringmatchingstring--regexp)
+- [`expect.objectContaining(object)`](#expectobjectcontainingobject)
+- [`expect.stringContaining(string)`](#expectstringcontainingstring)
+- [`expect.stringMatching(string | regexp)`](#expectstringmatchingstring--regexp)
+- [`expect.addSnapshotSerializer(serializer)`](#expectaddsnapshotserializerserializer)
+- [`.not`](#not)
+- [`.resolves`](#resolves)
+- [`.rejects`](#rejects)
+- [`.toBe(value)`](#tobevalue)
+- [`.toHaveBeenCalled()`](#tohavebeencalled)
+- [`.toHaveBeenCalledTimes(number)`](#tohavebeencalledtimesnumber)
+- [`.toHaveBeenCalledWith(arg1, arg2, ...)`](#tohavebeencalledwitharg1-arg2-)
+- [`.toHaveBeenLastCalledWith(arg1, arg2, ...)`](#tohavebeenlastcalledwitharg1-arg2-)
+- [`.toHaveBeenNthCalledWith(nthCall, arg1, arg2, ....)`](#tohavebeennthcalledwithnthcall-arg1-arg2-)
+- [`.toHaveReturned()`](#tohavereturned)
+- [`.toHaveReturnedTimes(number)`](#tohavereturnedtimesnumber)
+- [`.toHaveReturnedWith(value)`](#tohavereturnedwithvalue)
+- [`.toHaveLastReturnedWith(value)`](#tohavelastreturnedwithvalue)
+- [`.toHaveNthReturnedWith(nthCall, value)`](#tohaventhreturnedwithnthcall-value)
+- [`.toHaveLength(number)`](#tohavelengthnumber)
+- [`.toHaveProperty(keyPath, value?)`](#tohavepropertykeypath-value)
+- [`.toBeCloseTo(number, numDigits?)`](#tobeclosetonumber-numdigits)
+- [`.toBeDefined()`](#tobedefined)
+- [`.toBeFalsy()`](#tobefalsy)
+- [`.toBeGreaterThan(number | bigint)`](#tobegreaterthannumber--bigint)
+- [`.toBeGreaterThanOrEqual(number | bigint)`](#tobegreaterthanorequalnumber--bigint)
+- [`.toBeLessThan(number | bigint)`](#tobelessthannumber--bigint)
+- [`.toBeLessThanOrEqual(number | bigint)`](#tobelessthanorequalnumber--bigint)
+- [`.toBeInstanceOf(Class)`](#tobeinstanceofclass)
+- [`.toBeNull()`](#tobenull)
+- [`.toBeTruthy()`](#tobetruthy)
+- [`.toBeUndefined()`](#tobeundefined)
+- [`.toBeNaN()`](#tobenan)
+- [`.toContain(item)`](#tocontainitem)
+- [`.toContainEqual(item)`](#tocontainequalitem)
+- [`.toEqual(value)`](#toequalvalue)
+- [`.toMatch(regexp | string)`](#tomatchregexp--string)
+- [`.toMatchObject(object)`](#tomatchobjectobject)
+- [`.toMatchSnapshot(propertyMatchers?, hint?)`](#tomatchsnapshotpropertymatchers-hint)
+- [`.toMatchInlineSnapshot(propertyMatchers?, inlineSnapshot)`](#tomatchinlinesnapshotpropertymatchers-inlinesnapshot)
+- [`.toStrictEqual(value)`](#tostrictequalvalue)
+- [`.toThrow(error?)`](#tothrowerror)
+- [`.toThrowErrorMatchingSnapshot(hint?)`](#tothrowerrormatchingsnapshothint)
+- [`.toThrowErrorMatchingInlineSnapshot(inlineSnapshot)`](#tothrowerrormatchinginlinesnapshotinlinesnapshot)
 
 ---
 
@@ -1293,5 +1295,145 @@ describe("toMatchObject applied to arrays", () => {
 
 这可以确保值与最近的快照匹配。点击[快照测试指南](https://www.jestjs.cn/docs/snapshot-testing)了解更多消息。
 
-你可以提供一个可选的 `propertyMatchers` 对象参数，如果接收到的值是 object 对象，则该参数具有不对称匹配器作为预期属性子集的值。它就像 `toMatchObject` 具有灵活的属性子集标准，然后是快照测试作为其余属性的精确标准。
+你可以提供一个可选的 `propertyMatchers` 对象参数，如果接收到的值是对象实例，则该参数具有不对称匹配器作为预期属性子集的值。它就像 `toMatchObject` 具有灵活的子集，然后是快照测试作为其余属性的精确标准。
 
+你可以提供一个附加到测试名称的可选字符串参数 `hint` 。尽管 Jest 总是在快照名称的末尾附加一个数字，但在区分**单个** `it` 或 `test` 块中的**多个快照**时，简短的描述性提示可能比数字更有用。 Jest 在相应的 `.snap` 文件中按名称对快照进行排序。
+
+### `.toMatchInlineSnapshot(propertyMatchers?, inlineSnapshot)`
+
+确保值与最近的快照相匹配。
+
+你可以提供一个可选的 `propertyMatchers` 对象参数，如果接收到的值是对象实例，则该参数具有不对称匹配器作为预期属性子集的值。它就像 `toMatchObject` 具有灵活的子集，然后是快照测试作为其余属性的精确标准。
+
+在第一次运行测试时，Jest 将 `inlineSnapshot` 字符串参数添加到测试文件（而不是外部 `.snap` 文件）中的匹配器。
+
+查看[内联快照](https://www.jestjs.cn/docs/snapshot-testing#inline-snapshots)部分了解更多信息。
+
+### `.toStrictEqual(value)`
+
+使用 `.toStrictEqual` 来测试对象是否具有相同的类型和结构。
+
+与 `.toEqual` 的区别：
+
+- 检查具有未定义属性的键。例如 `{a: undefined, b: 2}` 在使用 `.toStrictEqual` 时与 `{b: 2}` 不匹配。
+- 检查数组稀疏性。例如 `[, 1]` 在使用 `.toStrictEqual` 时与 `[undefined, 1]` 不匹配。
+- 检查对象类型是否相等。例如具有字段 `a` 和 `b` 的类实例不等于具有字段 `a` 和 `b` 的文字对象。
+
+```javascript
+class LaCroix {
+  constructor(flavor) {
+    this.flavor = flavor;
+  }
+}
+
+describe("the La Croix cans on my desk", () => {
+  test("are not semantically the same", () => {
+    expect(new LaCroix("lemon")).toEqual({ flavor: "lemon" });
+    expect(new LaCroix("lemon")).not.toStrictEqual({ flavor: "lemon" });
+  });
+});
+```
+
+### `.toThrow(error?)`
+
+别名：`.toThrowError(error?)`
+
+使用 `.toThrow` 来测试函数在调用时是否抛出。例如，如果我们想测试 `drinkFlavor('octopus')` 抛出的情况，我们可以这样写：
+
+```javascript
+test("throws on octopus", () => {
+  expect(() => {
+    drinkFlavor("octopus");
+  }).toThrow();
+});
+```
+
+> 注意：必须将代码包裹在一个函数中，否则无法捕获错误，断言失败。
+
+你可以提供一个可选参数来测试是否抛出了特定错误：
+
+- 正则表达式：匹配错误消息
+- 字符串：错误消息包括子字符串
+- 错误对象：错误消息等于对象的消息属性
+- 错误类：错误对象是类的实例
+
+例如，假设 `drinkFlavor` 是这样写的：
+
+```javascript
+function drinkFlavor(flavor) {
+  if (flavor == "octopus") {
+    throw new DisgustingFlavorError("yuck, octopus flavor");
+  }
+  // 执行其它东西
+}
+```
+
+我们可以通过几种方式测试这个错误是否被抛出：
+
+```javascript
+test("throws on octopus", () => {
+  function drinkOctopus() {
+    drinkFlavor("octopus");
+  }
+
+  // 测试错误消息是否在某处显示 "yuck"，以下两种方法是相等的
+  expect(drinkOctopus).toThrowError(/yuck/);
+  expect(drinkOctopus).toThrowError("yuck");
+
+  // 精确匹配测试错误消息
+  expect(drinkOctopus).toThrowError(/^yuck, octopus flavor$/);
+  expect(drinkOctopus).toThrowError(new Error("yuck, octopus flavor"));
+
+  // 测试得到 DisgustingFlavorError
+  expect(drinkOctopus).toThrowError(DisgustingFlavorError);
+});
+```
+
+### `.toThrowErrorMatchingSnapshot(hint?)`
+
+使用 `.toThrowErrorMatchingSnapshot` 测试函数在调用时是否抛出与最近的快照相匹配的错误。
+
+你可以提供一个附加到测试名称的可选字符串参数 `hint` 。尽管 Jest 总是在快照名称的末尾附加一个数字，但在区分**单个** `it` 或 `test` 块中的**多个快照**时，简短的描述性提示可能比数字更有用。 Jest 在相应的 `.snap` 文件中按名称对快照进行排序。
+
+例如，假设你有一个 `DrinkFlavor` 函数，该函数在 flavor 等于 `'octopus'` 时抛出，其编码如下：
+
+```javascript
+function drinkFlavor(flavor) {
+  if (flavor == "octopus") {
+    throw new DisgustingFlavorError("yuck, octopus flavor");
+  }
+  // 执行其它内容
+}
+```
+
+这个函数的测试看起来像这样：
+
+```javascript
+test("throws on octopus", () => {
+  function drinkOctopus() {
+    drinkFlavor("octopus");
+  }
+
+  expect(drinkOctopus).toThrowErrorMatchingSnapshot();
+});
+```
+
+它将生成以下快照：
+
+```javascript
+exports[`drinking flavors throws on octopus 1`] = `"yuck, octopus flavor"`;
+```
+
+查看 [React Tree Snapshot Testing](https://www.jestjs.cn/blog/2016/07/27/jest-14) 以获取有关快照测试的更多信息。
+
+### `.toThrowErrorMatchingInlineSnapshot(inlineSnapshot)`
+
+使用 `.toThrowErrorMatchingInlineSnapshot` 测试函数在调用时是否抛出与最近的快照相匹配的错误。
+
+在第一次运行测试时，Jest 将 `inlineSnapshot` 字符串参数添加到测试文件（而不是外部 .snap 文件）中的匹配器。
+
+查看[内联快照](https://www.jestjs.cn/docs/snapshot-testing#inline-snapshots)部分了解更多信息。
+
+[上一章-Globals](/apis/Globals.md)
+
+[下一章-Mock Functions](/apis/MockFunctions.md)
