@@ -1338,7 +1338,7 @@ describe("the La Croix cans on my desk", () => {
 
 别名：`.toThrowError(error?)`
 
-使用 `.toThrow` 来测试函数在调用时是否抛出。例如，如果我们想测试 `drinkFlavor('octopus')` 抛出的情况，我们可以这样写：
+使用 `.toThrow` 来模拟函数在调用时是否抛出。例如，如果我们想测试 `drinkFlavor('octopus')` 抛出的情况，我们可以这样写：
 
 ```javascript
 test("throws on octopus", () => {
@@ -1391,7 +1391,7 @@ test("throws on octopus", () => {
 
 ### `.toThrowErrorMatchingSnapshot(hint?)`
 
-使用 `.toThrowErrorMatchingSnapshot` 测试函数在调用时是否抛出与最近的快照相匹配的错误。
+使用 `.toThrowErrorMatchingSnapshot` 模拟函数在调用时是否抛出与最近的快照相匹配的错误。
 
 你可以提供一个附加到测试名称的可选字符串参数 `hint` 。尽管 Jest 总是在快照名称的末尾附加一个数字，但在区分**单个** `it` 或 `test` 块中的**多个快照**时，简短的描述性提示可能比数字更有用。 Jest 在相应的 `.snap` 文件中按名称对快照进行排序。
 
@@ -1428,7 +1428,7 @@ exports[`drinking flavors throws on octopus 1`] = `"yuck, octopus flavor"`;
 
 ### `.toThrowErrorMatchingInlineSnapshot(inlineSnapshot)`
 
-使用 `.toThrowErrorMatchingInlineSnapshot` 测试函数在调用时是否抛出与最近的快照相匹配的错误。
+使用 `.toThrowErrorMatchingInlineSnapshot` 模拟函数在调用时是否抛出与最近的快照相匹配的错误。
 
 在第一次运行测试时，Jest 将 `inlineSnapshot` 字符串参数添加到测试文件（而不是外部 .snap 文件）中的匹配器。
 
