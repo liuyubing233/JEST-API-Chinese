@@ -54,6 +54,7 @@
 - [`.toEqual(value)`](#toequalvalue)
 - [`.toMatch(regexp | string)`](#tomatchregexp--string)
 - [`.toMatchObject(object)`](#tomatchobjectobject)
+- [`.toMatchSnapshot(propertyMatchers?, hint?)`](#tomatchsnapshotpropertymatchers-hint)
 
 ---
 
@@ -1238,7 +1239,7 @@ describe("grapefruits are healthy", () => {
 
 使用 `.toMatchObject` 检查 JavaScript 对象是否与对象的属性子集匹配。它会将接收到的对象与**不在预期对象中的属性**进行匹配。
 
-你还可以传递一个对象数组，这种情况下，只有当接收到的数组中的每个对象都匹配（在上述 `toMatchObject` 意义上）预期数组中的对应对象时，该方法才会返回 `true`。如果你想检查两个数组的元素数量是否匹配时这很有用，而不是 `arrayContaining`，它允许接收数组中的额外元素。
+你还可以传递一个对象数组，这种情况下，只有当接收到的数组中的**每个对象都匹配预期数组中的对应对象**时（在上述 `toMatchObject` 意义上），该方法才会返回 `true`。如果你想检查两个数组的元素数量是否匹配时使用这个方法，而不是 `arrayContaining`，它允许接收数组中的额外元素。
 
 你可以将属性与值或匹配器进行匹配。
 
@@ -1284,3 +1285,6 @@ describe("toMatchObject applied to arrays", () => {
   });
 });
 ```
+
+### `.toMatchSnapshot(propertyMatchers?, hint?)`
+
