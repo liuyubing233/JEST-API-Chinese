@@ -17,11 +17,11 @@ Mock Functions（模拟函数）也被称为“spies（间谍）”，因为它�
   - [`mockFn.mockName(value)`](#mockfnmocknamevalue)
   - [`mockFn.mockReturnThis()`](#mockfnmockreturnthis)
   - [`mockFn.mockReturnValue(value)`](#mockfnmockreturnvaluevalue)
-- [`mockFn.mockReturnValueOnce(value)`](#mockfnmockreturnvalueoncevalue)
+  - [`mockFn.mockReturnValueOnce(value)`](#mockfnmockreturnvalueoncevalue)
   - [`mockFn.mockResolvedValue(value)`](#mockfnmockresolvedvaluevalue)
   - [`mockFn.mockResolvedValueOnce(value)`](#mockfnmockresolvedvalueoncevalue)
   - [`mockFn.mockRejectedValue(value)`](#mockfnmockrejectedvaluevalue)
-- [`mockFn.mockRejectedValueOnce(value)`](#mockfnmockrejectedvalueoncevalue)
+  - [`mockFn.mockRejectedValueOnce(value)`](#mockfnmockrejectedvalueoncevalue)
 - [TypeScript](#typescript)
   - [`jest.MockedFunction`](#jestmockedfunction)
   - [`jest.MockedClass`](#jestmockedclass)
@@ -234,7 +234,7 @@ mock.mockReturnValue(43);
 mock(); // 43
 ```
 
-### `mockFn.mockReturnValueOnce(value)`
+#### `mockFn.mockReturnValueOnce(value)`
 
 接受在一次调用模拟函数时返回的值。可以进行链接，以便对模拟函数连续调用返回不同的值。当没有更多的 `mockReturnValueOnce` 值可以使用时，调用将返回一个由 `mockReturnValue` 指定的值。
 
@@ -310,7 +310,7 @@ test("async test", async () => {
 });
 ```
 
-### `mockFn.mockRejectedValueOnce(value)`
+#### `mockFn.mockRejectedValueOnce(value)`
 
 语法糖函数：
 
