@@ -15,6 +15,16 @@ Mock Functions（模拟函数）也被称为“spies（间谍）”，因为它�
   - [`mockFn.mockImplementation(fn)`](#mockfnmockimplementationfn)
   - [`mockFn.mockImplementationOnce(fn)`](#mockfnmockimplementationoncefn)
   - [`mockFn.mockName(value)`](#mockfnmocknamevalue)
+  - [`mockFn.mockReturnThis()`](#mockfnmockreturnthis)
+  - [`mockFn.mockReturnValue(value)`](#mockfnmockreturnvaluevalue)
+- [`mockFn.mockReturnValueOnce(value)`](#mockfnmockreturnvalueoncevalue)
+  - [`mockFn.mockResolvedValue(value)`](#mockfnmockresolvedvaluevalue)
+  - [`mockFn.mockResolvedValueOnce(value)`](#mockfnmockresolvedvalueoncevalue)
+  - [`mockFn.mockRejectedValue(value)`](#mockfnmockrejectedvaluevalue)
+- [`mockFn.mockRejectedValueOnce(value)`](#mockfnmockrejectedvalueoncevalue)
+- [TypeScript](#typescript)
+  - [`jest.MockedFunction`](#jestmockedfunction)
+  - [`jest.MockedClass`](#jestmockedclass)
 
 ---
 
@@ -159,7 +169,7 @@ console.log("Calls to m: ", mMock.mock.calls);
 
 #### `mockFn.mockImplementationOnce(fn)`
 
-接受一个函数，该函数将用作对模拟函数的一次调用的实现。可以进行链接，以便多个函数调用产生不同的结果。
+接受一个函数，该函数将用作对模拟函数的一次调用的实现。可以进行链接，以便函数连续调用产生不同的结果。
 
 ```javascript
 const myMockFn = jest
@@ -201,3 +211,255 @@ expect(mockedFunction).toHaveBeenCalled()
 
 Expected mock function "mockedFunction" to have been called, but it was not called.
 ```
+
+#### `mockFn.mockReturnThis()`
+
+语法糖函数：
+
+```javascript
+jest.fn(function () {
+  return this;
+});
+```
+
+#### `mockFn.mockReturnValue(value)`
+
+接受一个在调用模拟函数时返回的值。
+
+```javascript
+const mock = jest.fn();
+mock.mockReturnValue(42);
+mock(); // 42
+mock.mockReturnValue(43);
+mock(); // 43
+```
+
+### `mockFn.mockReturnValueOnce(value)`
+
+接受在一次调用模拟函数时返回的值。可以进行链接，以便对模拟函数连续调用返回不同的值。当没有更多的 `mockReturnValueOnce` 值可以使用时，调用将返回一个由 `mockReturnValue` 指定的值。
+
+```javascript
+const myMockFn = jest
+  .fn()
+  .mockReturnValue("default")
+  .mockReturnValueOnce("first call")
+  .mockReturnValueOnce("second call");
+
+// 'first call', 'second call', 'default', 'default'
+console.log(myMockFn(), myMockFn(), myMockFn(), myMockFn());
+```
+
+#### `mockFn.mockResolvedValue(value)`
+
+语法糖函数：
+
+```javascript
+jest.fn().mockImplementation(() => Promise.resolve(value));
+```
+
+在异步测试中模拟异步函数很有用：
+
+```javascript
+test("async test", async () => {
+  const asyncMock = jest.fn().mockResolvedValue(43);
+
+  await asyncMock(); // 43
+});
+```
+
+#### `mockFn.mockResolvedValueOnce(value)`
+
+语法糖函数：
+
+```javascript
+jest.fn().mockImplementationOnce(() => Promise.resolve(value));
+```
+
+解决多个异步调用的不同值：
+
+```javascript
+test("async test", async () => {
+  const asyncMock = jest
+    .fn()
+    .mockResolvedValue("default")
+    .mockResolvedValueOnce("first call")
+    .mockResolvedValueOnce("second call");
+
+  await asyncMock(); // first call
+  await asyncMock(); // second call
+  await asyncMock(); // default
+  await asyncMock(); // default
+});
+```
+
+#### `mockFn.mockRejectedValue(value)`
+
+语法糖函数：
+
+```javascript
+jest.fn().mockImplementation(() => Promise.reject(value));
+```
+
+用于创建状态永远是 `reject` 的异步函数：
+
+```javascript
+test("async test", async () => {
+  const asyncMock = jest.fn().mockRejectedValue(new Error("Async error"));
+
+  await asyncMock(); // throws "Async error"
+});
+```
+
+### `mockFn.mockRejectedValueOnce(value)`
+
+语法糖函数：
+
+```javascript
+jest.fn().mockImplementationOnce(() => Promise.reject(value));
+```
+
+```javascript
+test("async test", async () => {
+  const asyncMock = jest
+    .fn()
+    .mockResolvedValueOnce("first call")
+    .mockRejectedValueOnce(new Error("Async error"));
+
+  await asyncMock(); // first call
+  await asyncMock(); // throws "Async error"
+});
+```
+
+### TypeScript
+
+Jest 本身就是用 [TypeScript](https://www.typescriptlang.org/) 编写的。
+
+如果你使用 [Create React App](https://create-react-app.dev/)，那么 [TypeScript 模板](https://create-react-app.dev/docs/adding-typescript/) 拥有你开始在 TypeScript 中编写测试所需的一切内容。
+
+否则，请参阅我们的[入门指南](https://www.jestjs.cn/docs/getting-started#using-typescript)以使用 TypeScript 进行设置。
+
+你可以在我们的 [GitHub](https://github.com/facebook/jest/tree/master/examples/typescript) 中查看 Jest 与 TypeScript 结合使用的示例。
+
+#### `jest.MockedFunction`
+
+> `jest.MockedFunction` 在 `@types/jest` 的 `24.9.0` 版本中可用。
+
+阅读以下例子前建议先阅读 [Jest 的模拟函数在 JavaScript 中的使用](https://www.jestjs.cn/docs/mock-functions)。
+
+你可以使用 `jest.MockedFunction` 表示已被 Jest 模拟替换的函数。
+
+使用 [`automatic（自动）jest.mock`](/apis/TheJestObject.md) 的示例：
+
+```typescript
+// 假设 `add` 被导入并在 `calculate` 中使用
+import add from "./add";
+import calculate from "./calc";
+
+jest.mock("./add");
+
+// 对 `add` 的模拟已经完全导入
+const mockAdd = add as jest.MockedFunction<typeof add>;
+
+test("calculate calls add", () => {
+  calculate("Add", 1, 2);
+
+  expect(mockAdd).toBeCalledTimes(1);
+  expect(mockAdd).toBeCalledWith(1, 2);
+});
+```
+
+使用 [`jest.fn`](https://www.jestjs.cn/docs/jest-object#jestfnimplementation) 的例子：
+
+```typescript
+// 这里的 `add` 是作为其类型导入的
+import add from "./add";
+import calculate from "./calc";
+
+test("calculate calls add", () => {
+  // 创建一个新的模拟来替换 `add`
+  const mockAdd = jest.fn() as jest.MockedFunction<typeof add>;
+
+  // 你也可以像这样直接使用 `jest.fn`：
+  // const mockAdd = jest.fn<ReturnType<typeof add>, Parameters<typeof add>>();
+  // `jest.MockedFunction` 是更友好的使用方式
+
+  // 现在我们可以轻松的设置模拟的实现
+  // 所有的 `.mock*` API 现在都可以提供正确的 `add`
+  // https://jestjs.io/docs/mock-function-api
+
+  // `.mockImplementation` 现在可以推算 `a` 和 `b` 是 `number`
+  // 并且返回值也是一个 `number`.
+  mockAdd.mockImplementation((a, b) => {
+    // 这个模拟虽然添加两个数字但是想象一下我们在模拟一个复杂函数
+    return a + b;
+  });
+
+  // `mockAdd` 类型正确，所以接受任何被 `add` 的内容
+  calculate(mockAdd, 1, 2);
+
+  expect(mockAdd).toBeCalledTimes(1);
+  expect(mockAdd).toBeCalledWith(1, 2);
+});
+```
+
+#### `jest.MockedClass`
+
+> `jest.MockedClass` 在 `@types/jest` 的 `24.9.0` 版本中可用。
+
+阅读以下示例前建议先阅读 [Jest 模拟类如何与 JavaScript 协同工作](https://www.jestjs.cn/docs/es6-class-mocks)
+
+你可以使用 `jest.MockedClass` 来表示已被 Jest 模拟替换的类。
+
+转换 [ES6 类自动模拟示例](https://www.jestjs.cn/docs/es6-class-mocks#automatic-mock)如下所示：
+
+```typescript
+import SoundPlayer from "../sound-player";
+import SoundPlayerConsumer from "../sound-player-consumer";
+
+jest.mock("../sound-player"); // SoundPlayer 现在是一个构造函数
+
+const SoundPlayerMock = SoundPlayer as jest.MockedClass<typeof SoundPlayer>;
+
+beforeEach(() => {
+  // 清除所有实例和对构造函数方法的调用：
+  SoundPlayerMock.mockClear();
+});
+
+// 检查是否使用了构造函数
+it("We can check if the consumer called the class constructor", () => {
+  const soundPlayerConsumer = new SoundPlayerConsumer();
+  expect(SoundPlayerMock).toHaveBeenCalledTimes(1);
+});
+
+// 检查是否调用了类实例方法
+it("We can check if the consumer called a method on the class instance", () => {
+  // mockClear() 正常工作：
+  expect(SoundPlayerMock).not.toHaveBeenCalled();
+
+  const soundPlayerConsumer = new SoundPlayerConsumer();
+  // 构造函数应该被再次调用：
+  expect(SoundPlayerMock).toHaveBeenCalledTimes(1);
+
+  const coolSoundFileName = "song.mp3";
+  soundPlayerConsumer.playSomethingCool();
+
+  // mock.instances 可用于自动模拟：
+  const mockSoundPlayerInstance = SoundPlayerMock.mock.instances[0];
+
+  // 然而它不允许在 TypeScript 中使用 `.mock`，因为正在返回 `SoundPlayer`,
+  // 相反，你可以检查一个像这样完全类型化的方法：
+  expect(SoundPlayerMock.prototype.playSoundFile.mock.calls[0][0]).toEqual(
+    coolSoundFileName
+  );
+
+  // 跟上面的检查相等：
+  expect(SoundPlayerMock.prototype.playSoundFile).toHaveBeenCalledWith(
+    coolSoundFileName
+  );
+  expect(SoundPlayerMock.prototype.playSoundFile).toHaveBeenCalledTimes(1);
+});
+```
+
+[上一章-Expect](/apis/Expect.md)
+
+[下一章-The Jest Object](/apis/TheJestObject.md)
