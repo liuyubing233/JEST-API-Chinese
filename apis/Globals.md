@@ -483,7 +483,7 @@ test("did not rain", () => {
 
 第一个参数是测试名称；第二个参数是一个包含要测试的函数。
 
-> 注意：如果测试返回了一个 promise，Jest 将等待 promise 的 resolve，然后让测试完成。如果你向测试函数提供参数，通常称为 done，Jest 也会等待。当你想测试回调时这会很方便。在[此处](https://www.jestjs.cn/docs/asynchronous#callbacks)查看如何测试异步代码。
+> 注意：如果测试返回了一个 promise，Jest 将等待 promise 的 resolve，然后让测试完成。如果你向模拟函数提供参数，通常称为 done，Jest 也会等待。当你想测试回调时这会很方便。在[此处](https://www.jestjs.cn/docs/asynchronous#callbacks)查看如何测试异步代码。
 
 例如，假设 `fetchBeverageList()` 返回一个 promise，该 promise 应该解析为一个包含 `lemon` 的列表。你可以使用以下方法进行测试：
 
