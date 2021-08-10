@@ -693,7 +693,7 @@ test("plays audio", () => {
 
 _注意：如果不调用此方法，默认超时间隔为 5 秒。_
 
-_注意：如果您想为所有测试文件设置超时，`setupFilesAfterEnv` 是一个好方法。_
+_注意：如果你想为所有测试文件设置超时，`setupFilesAfterEnv` 是一个好方法。_
 
 ```javascript
 jest.setTimeout(1000); // 1s
