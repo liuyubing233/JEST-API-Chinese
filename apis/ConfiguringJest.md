@@ -205,3 +205,141 @@ Jest 输出包含测试文件范围的目录。
 格式为与文件路径匹配的正则格式的字符串数组，在执行测试之前进行匹配，如果文件路径与任何模式匹配，则将跳过该文件。
 
 这些字符串与完整路径匹配。使用 `<rootDir>` 字符串标记包含项目根目录的路径，以防止它忽略不同环境中可能具有不同根目录的所有文件。示例：`["<rootDir>/build/", "<rootDir>/node_modules/"]`。
+
+### `coverageProvider` [string]
+
+指示应使用哪个提供程序来检测代码。允许的值为 `babel`（默认）或 `v8`。
+
+请注意，`v8` 是实验性的。这使用了 V8 而不是基于 Babel 的代码覆盖率。它没有经过很好的测试，在 Node.js 的最后几个版本中也得到了改进。使用最新版本的 node（原文编写时为 v14）效果会更好。
+
+### `coverageReporters` [array\<string | [string, options]\>]
+
+默认值：`["json", "lcov", "text", "clover"]`
+
+Jest 在生产报告时使用的 reporter 列表。可以使用任何 [istanbul reporter](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib)。
+
+_注意：设置此选项会覆盖默认值。添加 `"text"` 或 `"text-summary"` 以在控制台输出中查看覆盖范围摘要。_
+
+_注意：你可以使用元组形式将其他选项传递给 istanbul 报告器。例如：_
+
+```json
+["json", ["lcov", { "projectRoot": "../../" }]]
+```
+
+有关选项对象结构的其他信息，你可以参考[类型定义](https://github.com/facebook/jest/blob/master/packages/jest-types/src/Config.ts)中的 `CoverageReporterWithOptions` 类型。
+
+### `coverageThreshold` [object]
+
+默认值：`undefined`
+
+这用于配置覆盖结果的最低阈值强制执行。阈值可以指定为 `global`、[glob](https://github.com/isaacs/node-glob#glob-primer) 以及目录或文件路径。如果未达到阈值，jest 将失败。指定为正数的阈值被视为所需的最小百分比。指定为负数的阈值表示允许的未覆盖实体的最大数量。
+
+例如使用以下配置，如果分支、行和函数覆盖率低于 80%，或者有 10 个以上未覆盖的语句，jest 将失败：
+
+```json
+{
+  ...
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": -10
+      }
+    }
+  }
+}
+```
+
+如果 globs 或路径与 `global` 一起指定，则匹配路径的覆盖数据将从整体覆盖中减去，并且阈值将独立应用。 glob 的阈值适用于所有与 glob 匹配的文件。如果找不到路径指定的文件，则返回错误。
+
+例如，使用以下配置：
+
+```json
+{
+  ...
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      },
+      "./src/components/": {
+        "branches": 40,
+        "statements": 40
+      },
+      "./src/reducers/**/*.js": {
+        "statements": 90
+      },
+      "./src/api/very-important-module.js": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  }
+}
+```
+
+如果出现以下情况，Jest 将失败：
+
+- `./src/components` 目录的分支或语句覆盖率不到 40%。
+- 匹配 `./src/reducers/**/*.js` glob 的文件之一的语句覆盖率低于 90%。
+- `./src/api/very-important-module.js` 文件的覆盖率低于 100%。
+- 每个剩余文件的总覆盖率低于 50%（全局）。
+
+### `dependencyExtractor` [string]
+
+此选项允许使用自定义依赖项提取器。它必须是一个使用 `extract` 功能导出对象的节点模块。例如：\
+
+```js
+const crypto = require("crypto");
+const fs = require("fs");
+
+module.exports = {
+  extract(code, filePath, defaultExtract) {
+    const deps = defaultExtract(code, filePath);
+    // 扫描文件并在`deps`（这是一个`Set`）中添加依赖项
+    return deps;
+  },
+  getCacheKey() {
+    return crypto
+      .createHash("md5")
+      .update(fs.readFileSync(__filename))
+      .digest("hex");
+  },
+};
+```
+
+`extract` 函数应该返回一个可迭代对象（`Array`、`Set` 等），其中包含在代码中找到的依赖项。
+
+该模块还可以包含一个 `getCacheKey` 函数来生成一个缓存键，以确定逻辑是否已更改，并且任何依赖于它的缓存工件都应该被丢弃。
+
+### `displayName` [string, object]
+
+默认值：`undefined`
+
+允许在测试运行时在测试旁边打印标签。这在可能有许多 jest 配置文件的多项目存储库中变得更加有用。能直观地告诉我们测试属于哪个项目。以下是示例有效值：
+
+```js
+module.exports = {
+  displayName: "CLIENT",
+};
+```
+
+或
+
+```js
+module.exports = {
+  displayName: {
+    name: "CLIENT",
+    color: "blue",
+  },
+};
+```
+
+作为次要选项，可以传递具有属性 `name` 和 `color` 的对象。这允许自定义配置 `displayName` 的背景颜色。当其值为字符串时，displayName 默认为白色。 Jest 使用 [chalk](https://github.com/chalk/chalk) 提供颜色。因此，jest 也支持 chalk 支持的所有颜色的有效选项。
