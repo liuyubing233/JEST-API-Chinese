@@ -80,7 +80,73 @@ module.exports = {
 };
 ```
 
-// TODO: 最后创建目录
+- [`automock` [boolean]](#automock-boolean)
+- [`bail` [number | boolean]](#bail-number--boolean)
+- [`cacheDirectory` [string]](#cachedirectory-string)
+- [`clearMocks` [boolean]](#clearmocks-boolean)
+- [`collectCoverage` [boolean]](#collectcoverage-boolean)
+- [`collectCoverageFrom` [array]](#collectcoveragefrom-array)
+- [`coverageDirectory` [string]](#coveragedirectory-string)
+- [`coveragePathIgnorePatterns` [array\<string\>]](#coveragepathignorepatterns-arraystring)
+- [`coverageProvider` [string]](#coverageprovider-string)
+- [`coverageReporters` [array\<string | [string, options]\>]](#coveragereporters-arraystring--string-options)
+- [`coverageThreshold` [object]](#coveragethreshold-object)
+- [`dependencyExtractor` [string]](#dependencyextractor-string)
+- [`displayName` [string, object]](#displayname-string-object)
+- [`errorOnDeprecated` [boolean]](#errorondeprecated-boolean)
+- [`extensionsToTreatAsEsm` [array\<string\>]](#extensionstotreatasesm-arraystring)
+- [`extraGlobals` [array\<string\>]](#extraglobals-arraystring)
+- [`forceCoverageMatch` [array\<string\>]](#forcecoveragematch-arraystring)
+- [`globals` [object]](#globals-object)
+- [`globalSetup` [string]](#globalsetup-string)
+- [`globalTeardown` [string]](#globalteardown-string)
+- [`haste` [object]](#haste-object)
+- [`injectGlobals` [boolean]](#injectglobals-boolean)
+- [`maxConcurrency` [number]](#maxconcurrency-number)
+- [`maxWorkers` [number | string]](#maxworkers-number--string)
+- [`moduleDirectories` [array\<string\>]](#moduledirectories-arraystring)
+- [`moduleFileExtensions` [array\<string\>]](#modulefileextensions-arraystring)
+- [`moduleNameMapper` [object<string, string | array\<string\>>]](#modulenamemapper-objectstring-string--arraystring)
+- [`modulePathIgnorePatterns` [array\<string\>]](#modulepathignorepatterns-arraystring)
+- [`modulePaths` [array\<string\>]](#modulepaths-arraystring)
+- [`notify` [boolean]](#notify-boolean)
+- [`notifyMode` [string]](#notifymode-string)
+- [`preset` [string]](#preset-string)
+- [`prettierPath` [string]](#prettierpath-string)
+- [`projects` [array\<string | ProjectConfig\>]](#projects-arraystring--projectconfig)
+- [`reporters` [array\<moduleName | [moduleName, options]\>]](#reporters-arraymodulename--modulename-options)
+- [`resetMocks` [boolean]](#resetmocks-boolean)
+- [`resetModules` [boolean]](#resetmodules-boolean)
+- [`resolver` [string]](#resolver-string)
+- [`restoreMocks` [boolean]](#restoremocks-boolean)
+- [`rootDir` [string]](#rootdir-string)
+- [`roots` [array\<string\>]](#roots-arraystring)
+- [`runner` [string]](#runner-string)
+- [`setupFiles` [array]](#setupfiles-array)
+- [`setupFilesAfterEnv` [array]](#setupfilesafterenv-array)
+- [`slowTestThreshold` [number]](#slowtestthreshold-number)
+- [`snapshotResolver` [string]](#snapshotresolver-string)
+- [`snapshotSerializers` [array\<string\>]](#snapshotserializers-arraystring)
+- [`testEnvironment` [string]](#testenvironment-string)
+- [`testEnvironmentOptions` [Object]](#testenvironmentoptions-object)
+- [`testFailureExitCode` [number]](#testfailureexitcode-number)
+- [`testMatch` [array\<string\>]](#testmatch-arraystring)
+- [`testPathIgnorePatterns` [array\<string\>]](#testpathignorepatterns-arraystring)
+- [`testRegex` [string | array\<string\>]](#testregex-string--arraystring)
+- [`testResultsProcessor` [string]](#testresultsprocessor-string)
+- [`testRunner` [string]](#testrunner-string)
+- [`testSequencer` [string]](#testsequencer-string)
+- [`testTimeout` [number]](#testtimeout-number)
+- [`testURL` [string]](#testurl-string)
+- [`timers` [string]](#timers-string)
+- [`transform` [object<string, pathToTransformer | [pathToTransformer, object]>]](#transform-objectstring-pathtotransformer--pathtotransformer-object)
+- [`transformIgnorePatterns` [array\<string\>]](#transformignorepatterns-arraystring)
+- [`unmockedModulePathPatterns` [array\<string\>]](#unmockedmodulepathpatterns-arraystring)
+- [`verbose` [boolean]](#verbose-boolean)
+- [`watchPathIgnorePatterns` [array\<string\>]](#watchpathignorepatterns-arraystring)
+- [`watchPlugins` [array\<string | [string, Object]\>]](#watchplugins-arraystring--string-object)
+- [`watchman` [boolean]](#watchman-boolean)
+- [`//` [string]](#-string)
 
 ---
 
@@ -436,7 +502,7 @@ if (process.env.NODE_ENV === "test") {
 }
 ```
 
-请注意，如果你在此处指定全局引用值（如对象或数组），并且某些代码在运行测试期间更改该值，则该更改将**不会**在其他测试文件的测试运行中持续存在。另外，`globals` 对象必须是 json-serializable，因此不能用于指定全局函数。如果想要实现该功能，请 `setupFiles`。
+请注意，如果你在此处指定全局引用值（如对象或数组），并且某些代码在运行测试期间更改该值，则该更改将**不会**在其他测试文件的测试运行中持续存在。另外，`globals` 对象必须是 json-serializable，因此不能用于指定全局函数。如果想要实现该功能，请使用 `setupFiles`。
 
 ### `globalSetup` [string]
 
@@ -775,7 +841,7 @@ class MyCustomReporter {
 
 此选项允许使用自定义解析器。这个解析器必须是一个节点模块，它导出一个函数，第一个参数为要解析的路径的字符串，第二个参数具有以下结构的对象：
 
-```json
+```js
 {
   "basedir": string,
   "defaultResolver": "function(request, options)",
@@ -828,7 +894,7 @@ module.exports = (request, options) => {
   return options.defaultResolver(request, {
     ...options,
     // 解析前使用 packageFilter 对解析后的 `package.json` 进行处理（https://www.npmjs.com/package/resolve#resolveid-opts-cb）
-    packageFilter: pkg => {
+    packageFilter: (pkg) => {
       return {
         ...pkg,
         // 在解析包之前改变 `main` 的值
@@ -838,3 +904,556 @@ module.exports = (request, options) => {
   });
 };
 ```
+
+### `restoreMocks` [boolean]
+
+默认值：`false`
+
+每次测试前自动恢复模拟状态。相当于在每次测试之前调用 `jest.restoreAllMocks()`。这将导致任何模拟删除其虚假实现并恢复其初始实现。
+
+### `rootDir` [string]
+
+默认值：包含 Jest 配置文件或 `package.json` 的目录的根目录，如果未找到 `package.json` 则为 [`pwd`](https://baike.baidu.com/item/PWD/3730074)
+
+Jest 应该扫描其中的测试和模块的根目录。如果你把你的 Jest 配置放在你的 `package.json` 中，并希望根目录成为你的 repo 的根目录，这个配置参数的值将默认为 `package.json` 的目录。
+
+通常，你需要将其设置为 `'src'` 或 `'lib'` ，与代码存储在存储库中的位置相对应。
+
+_请注意，在任何其他基于路径的配置设置中使用 `'<rootDir>'` 作为字符串标记将引用回此值。因此，假设你希望 setupFiles 配置条目指向项目根目录下的 `env-setup.js` 文件，则可以将其值设置为 `["<rootDir>/env-setup.js"]`。_
+
+### `roots` [array\<string\>]
+
+默认值：`["<rootDir>"]`
+
+Jest 应该用来搜索文件的目录路径列表。
+
+有时，你只希望 Jest 在单个子目录中进行搜索（例如，你的存储库中有 `src/` 目录的情况），并阻止它访问存储库的其余部分。
+
+_注意：虽然 `rootDir` 主要用作在其他配置选项中重用的标记，但 Jest 内部使用 `roots` 来定位**测试文件和源文件**。这也适用于从 `node_modules` 搜索模块进行手动模拟（`__mocks__` 将需要位于其中一个 `roots` 中）。_
+
+_注意：默认情况下，`roots` 只有一个条目 `<rootDir>`，但在某些情况下，你可能希望在一个项目中有多个搜索路径，例如 `roots: ["<rootDir>/src/", "<rootDir>/tests/ ”]`。_
+
+### `runner` [string]
+
+默认值：`"jest-runner"`
+
+此选项允许你使用自定义运行程序而不是 Jest 的默认测试运行程序。runner 的例子包括：
+
+- [`jest-runner-eslint`](https://github.com/jest-community/jest-runner-eslint)
+- [`jest-runner-mocha`](https://github.com/rogeliog/jest-runner-mocha)
+- [`jest-runner-tsc`](https://github.com/azz/jest-runner-tsc)
+- [`jest-runner-prettier`](https://github.com/keplersj/jest-runner-prettier)
+
+_注意：`runner` 属性值可以省略包名的 `jest-runner-` 前缀。_
+
+要编写测试运行程序，请在构造函数中导出一个接受 `globalConfig` 的类，并要有一个带有签名的 `runTests` 方法：
+
+```ts
+async runTests(
+  tests: Array<Test>,
+  watcher: TestWatcher,
+  onStart: OnTestStart,
+  onResult: OnTestSuccess,
+  onFailure: OnTestFailure,
+  options: TestRunnerOptions,
+): Promise<void>
+```
+
+如果你需要限制测试运行程序仅以串行方式运行而不是并行执行，你应该将类的属性 `isSerial` 设置为 `true`。
+
+### `setupFiles` [array]
+
+默认值：`[]`
+
+运行一些代码来配置或设置测试环境的模块的路径列表。每个 `setupFile` 将针对每个测试文件运行一次。由于每个测试都在其自己的环境中运行，因此这些脚本会在执行测试代码之前在测试环境中执行。
+
+还值得注意的是 `setupFiles` 会在 `setupFilesAfterEnv` 之前执行。
+
+### `setupFilesAfterEnv` [array]
+
+默认值：`[]`
+
+在执行套件中的每个测试文件之前，运行一些代码以配置或设置测试框架的模块的路径列表。由于 `setupFiles` 在环境中安装测试框架之前执行，此脚本文件为你提供了在环境中**安装测试框架后**立即运行一些代码的机会。
+
+如果你希望路径相对于项目的根目录（参考 rootDir），请在路径字符串中包含 `<rootDir>`，例如 `"<rootDir>/a-configs-folder"`。
+
+例如，Jest 为 `jasmine` 提供了几个插件，这些插件通过 `monkey-patching` 操作 `jasmine` API 来工作。如果你想添加更多的 jasmine 插件（或者如果你想要一些自定义的、项目范围的匹配器），你可以在这些模块中这样做。
+
+_注意：`setupTestFrameworkScriptFile` 已被弃用，取而代之的是 `setupFilesAfterEnv`。_
+
+jest.config.js 中的 `setupFilesAfterEnv` 数组示例：
+
+```js
+module.exports = {
+  setupFilesAfterEnv: ["./jest.setup.js"],
+};
+```
+
+`jest.setup.js` 文件示例：
+
+```js
+jest.setTimeout(10000);
+```
+
+### `slowTestThreshold` [number]
+
+默认值：`5`
+
+测试被视为是缓慢的并在结果中报告的秒数。
+
+### `snapshotResolver` [string]
+
+默认值：`undefined`
+
+可以解析 test<->snapshot 路径的模块的路径。这个配置选项让你自定义 Jest 在磁盘上存储快照文件的位置。
+
+举个快照解析器的例子：
+
+```js
+module.exports = {
+  // 从测试到快照路径
+  resolveSnapshotPath: (testPath, snapshotExtension) =>
+    testPath.replace("__tests__", "__snapshots__") + snapshotExtension,
+
+  // 从快照到测试路径
+  resolveTestPath: (snapshotFilePath, snapshotExtension) =>
+    snapshotFilePath
+      .replace("__snapshots__", "__tests__")
+      .slice(0, -snapshotExtension.length),
+
+  // 示例测试路径，用于上述实现的一致性检查
+  testPathForConsistencyCheck: "some/__tests__/example.test.js",
+};
+```
+
+### `snapshotSerializers` [array\<string\>]
+
+默认值：`[]`
+
+Jest 用于快照测试的快照序列化模块的路径列表。
+
+Jest 有内置的 JavaScript 类型，HTML 元素（Jest 20.0.0+），ImmutableJS（Jest 20.0.0+）和 React 元素的默认序列化。见[快照测试教程](https://jestjs.io/docs/tutorial-react-native#snapshot-test)以获取更多信息。
+
+```js
+// my-serializer-module
+module.exports = {
+  serialize(val, config, indentation, depth, refs, printer) {
+    return "Pretty foo: " + printer(val.foo);
+  },
+
+  test(val) {
+    return val && val.hasOwnProperty("foo");
+  },
+};
+```
+
+`printer` 是一个使用现有插件序列化值的函数。
+
+要使用 `my-serializer-module` 作为序列化器，配置如下：
+
+```json
+{
+  ...
+  "jest": {
+    "snapshotSerializers": ["my-serializer-module"]
+  }
+}
+```
+
+最后的测试如下：
+
+```js
+test(() => {
+  const bar = {
+    foo: {
+      x: 1,
+      y: 2,
+    },
+  };
+
+  expect(bar).toMatchSnapshot();
+});
+```
+
+渲染快照：
+
+```ts
+Pretty foo: Object {
+  "x": 1,
+  "y": 2,
+}
+```
+
+要显式引用依赖项而不是隐式，你可以调用 [expect.addSnapshotSerializer](https://github.com/superPufferfish/JEST-API-Chinese/blob/main/apis/Expect.md#expectaddsnapshotserializerserializer) 为单个测试文件添加模块，而不是在 Jest 配置中将其路径添加到 `snapshotSerializers`。
+
+更多关于序列化程序的 API 可以在 [这里](https://github.com/facebook/jest/blob/master/packages/pretty-format/README.md#serialize) 找到。
+
+### `testEnvironment` [string]
+
+默认值：`"node"`
+
+用于测试的测试环境。 Jest 中的默认环境是 Node.js 环境。如果你正在构建 Web 应用程序，则可以通过设置为 [`jsdom`](https://github.com/jsdom/jsdom) 使用类似浏览器的环境。
+
+通过在文件顶部添加 `@jest-environment` 文档块，你可以指定另一个环境用于该文件中的所有测试：
+
+```js
+/**
+ * @jest-environment jsdom
+ */
+
+test("use jsdom in this test file", () => {
+  const element = document.createElement("div");
+  expect(element).not.toBeNull();
+});
+```
+
+你可以创建自己的模块用于设置测试环境。该模块必须导出一个具有 `setup`、`teardown` 和 `getVmContext` 方法的类。还可以通过将变量分配给 `this.global` 对象来将变量从该模块传递到你的测试套件 - 这将使它们在你的测试套件中作为全局变量可用。
+
+该类可以选择公开一个异步 `handleTestEvent` 方法以绑定到由 [`jest-circus`](https://github.com/facebook/jest/tree/master/packages/jest-circus) 触发的事件。通常，`jest-circus` 测试运行器会暂停，直到从 `handleTestEvent` 返回的 promise 得到实现，除了以下活动：`start_describe_definition`、`finish_describe_definition`、`add_hook`、`add_test` 或 `error`（对于最新列表，你可以查看 [SyncEvent 类型中的类型定义](https://github.com/facebook/jest/blob/master/packages/jest-types/src/Circus.ts)）。这是由向后兼容性原因和 `process.on('unhandledRejection', callback)` 签名引起的，但这对于大多数用例来说通常不是问题。
+
+测试文件中的所有的文档块 pragma 指令都将传递给环境构造函数，并可用于每个测试的配置。如果 pragma 没有值，它将出现在对象中，并将其值设置为空字符串。如果 pragma 不存在，则它不会出现在对象中。
+
+要将此类用作你的自定义环境，请通过其在项目中的完整路径来引用它。例如，如果你的类存储在项目的某个子文件夹中的 `my-custom-environment.js` 中，则注释可能如下所示：
+
+```js
+/**
+ * @jest-environment ./src/test/my-custom-environment
+ */
+```
+
+_注意：testEnvironment 是沙盒化的。每个测试套件都在他们自己的测试环境中触发设置和拆卸。_
+
+举个例子：
+
+```js
+// my-custom-environment
+const NodeEnvironment = require("jest-environment-node");
+
+class CustomEnvironment extends NodeEnvironment {
+  constructor(config, context) {
+    super(config, context);
+    this.testPath = context.testPath;
+    this.docblockPragmas = context.docblockPragmas;
+  }
+
+  async setup() {
+    await super.setup();
+    await someSetupTasks(this.testPath);
+    this.global.someGlobalObject = createGlobalObject();
+
+    // 如果文档块包含 @my-custom-pragma my-pragma-value 则触发
+    if (this.docblockPragmas["my-custom-pragma"] === "my-pragma-value") {
+      // ...
+    }
+  }
+
+  async teardown() {
+    this.global.someGlobalObject = destroyGlobalObject();
+    await someTeardownTasks();
+    await super.teardown();
+  }
+
+  getVmContext() {
+    return super.getVmContext();
+  }
+
+  async handleTestEvent(event, state) {
+    if (event.name === "test_start") {
+      // ...
+    }
+  }
+}
+
+module.exports = CustomEnvironment;
+```
+
+```js
+// my-test-suite
+/**
+ * @jest-environment ./my-custom-environment
+ */
+let someGlobalObject;
+
+beforeAll(() => {
+  someGlobalObject = global.someGlobalObject;
+});
+```
+
+### `testEnvironmentOptions` [Object]
+
+默认值：`{}`
+
+将传递给 `testEnvironment` 的测试环境选项。相关选项取决于环境。例如，你可以覆盖提供给 [jsdom](https://github.com/jsdom/jsdom) 的选项，例如 `{userAgent: "Agent/007"}`。
+
+### `testFailureExitCode` [number]
+
+默认值：`1`
+
+退出代码 Jest 在测试失败时返回。
+
+_注意：这在 Jest 错误的情况下这不会更改退出代码（例如无效的配置）。_
+
+### `testMatch` [array\<string\>]
+
+默认值：`[ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ]`
+
+Jest 用于检测测试文件的 glob 模式。默认情况下，它会在 `__tests__` 文件夹中查找 `.js`、`.jsx`、`.ts` 和 `.tsx` 文件，以及任何带有 `.test` 或 `.spec` 后缀的文件（例如 `Component.test.js` 或 `Component.spec.js`） .它还会找到名为 `test.js` 或 `spec.js` 的文件。
+
+有关你可以指定的模式详细信息，请参阅 [micromatch](https://github.com/micromatch/micromatch) 包。
+
+也可以查看 [`testRegex` [string | array\<string\>]](#testregex-string--arraystring)，但是你不能同时指定这两个选项。
+
+_注意：每个 glob 模式都按照它们在配置中指定的顺序应用。（例如 `["!**/__fixtures__/**", "**/__tests__/**/*.js"]` 不会排除 `__fixtures__` 因为拒绝查找被第二个模式覆盖。为了使拒绝查找的 glob 在这个例子中工作它必须在 `**/__tests__/**/*.js` 之后。）_
+
+### `testPathIgnorePatterns` [array\<string\>]
+
+默认值：`["/node_modules/"]`
+
+在执行测试之前与所有测试路径匹配的正则字符串数组。如果测试路径匹配任何模式，它将被跳过。
+
+这些模式字符串与完整路径匹配。使用 `<rootDir>` 字符串标记来包含项目根目录的路径，以防止它忽略不同环境中可能具有不同根目录的所有文件。示例：`["<rootDir>/build/", "<rootDir>/node_modules/"]`。
+
+### `testRegex` [string | array\<string\>]
+
+默认值：`(/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$`
+
+Jest 用来检测测试文件的一个或多个模式。默认情况下，它会在 `__tests__` 文件夹中查找 `.js`、`.jsx`、`.ts` 和 `.tsx` 文件，以及任何带有 `.test` 或 `.spec` 后缀的文件（例如 `Component.test.js` 或 `Component.spec.js`） .它还会找到名为 `test.js` 或 `spec.js` 的文件。
+
+也可以查看 [`testMatch` [array\<string\>]](#testmatch-arraystring)，但请注意，你不能同时指定这两个选项。
+
+以下是默认正则表达式的可视化格式：
+
+```bash
+├── __tests__
+│   └── component.spec.js # test
+│   └── anything # test
+├── package.json # not test
+├── foo.test.js # test
+├── bar.spec.jsx # test
+└── component.js # not test
+```
+
+_注意：`testRegex` 将尝试使用文件的**绝对路径**检测测试文件，因此，文件夹中有一个名称与其匹配将会运行所有文件作为测试_
+
+### `testResultsProcessor` [string]
+
+默认值：`undefined`
+
+此选项允许使用自定义的结果处理器。这个处理器必须是一个节点模块，它导出一个函数，需要具有以下结构的对象作为第一个参数并返回它：
+
+```js
+{
+  "success": boolean,
+  "startTime": epoch,
+  "numTotalTestSuites": number,
+  "numPassedTestSuites": number,
+  "numFailedTestSuites": number,
+  "numRuntimeErrorTestSuites": number,
+  "numTotalTests": number,
+  "numPassedTests": number,
+  "numFailedTests": number,
+  "numPendingTests": number,
+  "numTodoTests": number,
+  "openHandles": Array<Error>,
+  "testResults": [{
+    "numFailingTests": number,
+    "numPassingTests": number,
+    "numPendingTests": number,
+    "testResults": [{
+      "title": string (message in it block),
+      "status": "failed" | "pending" | "passed",
+      "ancestorTitles": [string (message in describe blocks)],
+      "failureMessages": [string],
+      "numPassingAsserts": number,
+      "location": {
+        "column": number,
+        "line": number
+      }
+    },
+    ...
+    ],
+    "perfStats": {
+      "start": epoch,
+      "end": epoch
+    },
+    "testFilePath": absolute path to test file,
+    "coverage": {}
+  },
+  ...
+  ]
+}
+```
+
+### `testRunner` [string]
+
+默认值：`jest-circus/runner`
+
+此选项允许使用自定义测试运行器。默认值为 `jest-circus`。可以通过指定测试运行器实现的路径来提供自定义测试运行器。
+
+测试运行器模块必须导出具有以下参数的函数：
+
+```ts
+function testRunner(
+  globalConfig: GlobalConfig,
+  config: ProjectConfig,
+  environment: Environment,
+  runtime: Runtime,
+  testPath: string
+): Promise<TestResult>;
+```
+
+可以在我们默认的 [jasmine2 测试运行程序包](https://github.com/facebook/jest/blob/master/packages/jest-jasmine2/src/index.ts)中找到此类功能的示例。
+
+### `testSequencer` [string]
+
+默认值：`@jest/test-sequencer`
+
+此选项允许你使用自定义顺序加载器而不是 Jest 的默认值。 `sort` 可以选择返回一个 Promise。
+
+例如，按字母顺序对测试路径进行排序：
+
+```js
+// testSequencer.js
+const Sequencer = require("@jest/test-sequencer").default;
+
+class CustomSequencer extends Sequencer {
+  sort(tests) {
+    // 测试结构信息
+    // https://github.com/facebook/jest/blob/6b8b1404a1d9254e7d5d90a8934087a9c9899dab/packages/jest-runner/src/types.ts#L17-L21
+    const copyTests = Array.from(tests);
+    return copyTests.sort((testA, testB) => (testA.path > testB.path ? 1 : -1));
+  }
+}
+
+module.exports = CustomSequencer;
+```
+
+在你的 Jest 配置文件中使用它，如下所示：
+
+```json
+{
+  "testSequencer": "path/to/testSequencer.js"
+}
+```
+
+### `testTimeout` [number]
+
+默认值：`5000`
+
+测试的默认超时（以毫秒为单位）。
+
+### `testURL` [string]
+
+默认值：`http://localhost`
+
+此选项设置 jsdom 环境的 URL。它反映在 `location.href` 等属性中。
+
+### `timers` [string]
+
+默认值：`real`
+
+默认情况下，将该值设置为 `fake` 或 `modern` 为所有测试启用假计时器。当一段代码设置了长暂停但是我们不想等待测试，假定时器是很有用的。可以在这里[了解](https://github.com/superPufferfish/JEST-API-Chinese/blob/main/apis/TheJestObject.md#jestusefaketimersimplementation-modern--legacy)更多关于假定时器的内容。
+
+如果该值是 `legacy`，那么将使用旧的实现，而不是由 [`@sinonjs/fake-timers`](https://github.com/sinonjs/fake-timers) 支持的实现。
+
+### `transform` [object<string, pathToTransformer | [pathToTransformer, object]>]
+
+默认值：`{"\\.[jt]sx?$": "babel-jest"}`
+
+从正则表达式到转换器路径的映射。转换器是一个提供同步转换源文件功能的模块。例如，如果你希望能够在 node 尚不支持的模块或测试中使用新的语言功能，你可以插入许多编译器之一，将未来版本的 JavaScript 编译为当前版本。示例请参考 [example/typescript](https://github.com/facebook/jest/blob/master/examples/typescript/package.json#L16)示例或 [webpack tutorial](https://jestjs.io/docs/webpack)。
+
+此类编译器的示例包括：
+
+- [Babel](https://babeljs.io/)
+- [TypeScript](https://www.typescriptlang.org/)
+- 想要自己构建编译器，请访问 [Code Transformation](/apis/CodeTransformation.md) 部分
+
+你可以将配置传递给像 `{filePattern: ['path-to-transformer', {options}]}` 这样的转换器，例如，为非默认行为配置 babel-jest，`{"\\.js$": ['babel-jest', {rootMode: "upward"}]}`
+
+_注意：除非文件已更改，否则每个文件只运行一次转换器。在转换器的开发过程中，如果[频繁删除 Jest 缓存](https://jestjs.io/docs/troubleshooting#caching-issues) 使用 `--no-cache` 会很有用。_
+
+_注意：当添加额外的代码转换器时，这将覆盖默认配置并且 `babel-jest` 不再自动加载。如果你想用它来编译 JavaScript 或 Typescript，它必须通过将 `{"\\.[jt]sx?$": "babel-jest"}` 添加到转换属性来明确定义。查看 [babel-jest 插件](https://github.com/facebook/jest/tree/master/packages/babel-jest#setup)_
+
+转换器必须是至少具有进程函数的对象，并且还建议包含 `getCacheKey` 函数。如果你的转换器是用 ESM 编写的，你应该带有一个具有该对象的默认导出。
+
+如果测试是使用 [native ESM](https://jestjs.io/docs/ecmascript-modules) 编写的，转换器可以导出 `processAsync` 和 `getCacheKeyAsync` 作为同步变体的替代或补充。
+
+### `transformIgnorePatterns` [array\<string\>]
+
+默认值：`["/node_modules/", "\\.pnp\\.[^\\\/]+$"]`
+
+与转换前的所有源文件路径匹配的正则字符串数组。如果文件路径与任何模式匹配，则不会对其进行转换。
+
+这些模式字符串与完整路径匹配。使用 `<rootDir>` 字符串标记来包含项目根目录的路径，以防止它忽略不同环境中可能具有不同根目录的所有文件。
+
+例如：`["<rootDir>/bower_components/", "<rootDir>/node_modules/"]`
+
+有时会发生第三方模块发布成未转译的情况（尤其是在 React Native 或 TypeScript 项目中）。由于 `node_modules` 中的所有文件默认都不会被转换，Jest 不会理解这些模块中的代码，从而导致语法错误。为了克服这个问题，你可以使用 `transformIgnorePatterns` 来允许转译此类模块。你会在 [React Native Guide](https://jestjs.io/docs/tutorial-react-native#transformignorepatterns-customization) 中找到这个用例的的例子。
+
+### `unmockedModulePathPatterns` [array\<string\>]
+
+默认值：`[]`
+
+一个正则字符串数组，在模块加载器自动返回所有模块的模拟之前，与所有模块匹配。如果一个模块的路径匹配这个列表中的任何模式，它将不会被模块加载器自动模拟。
+
+这对于一些几乎始终用作实现细节的常用“实用程序”模块很有用（例如 `_` 等）。通常最好的做法是让这个列表尽可能小，并且在单个测试中始终使用显式 `jest.mock()` / `jest.unmock()` 调用。明确的每个测试设置对于测试的其他读者来说更容易推断测试的运行环境。
+
+通过在测试文件的顶部显式调用 `jest.mock()` 可以在单个测试中覆盖此设置。
+
+### `verbose` [boolean]
+
+默认值：`false`
+
+指示是否应在运行期间报告每个单独的测试。执行后，所有错误也仍将显示在底部。请注意，如果只有一个测试文件正在运行，它将默认为 `true`。
+
+### `watchPathIgnorePatterns` [array\<string\>]
+
+默认值：`[]`
+
+一个正则字符串数组，在监视模式下重新运行测试之前，与所有模块匹配。如果文件路径与任何模式匹配，则在更新时不会触发重新运行测试。
+
+这些模式与完整路径匹配。使用 `<rootDir>` 字符串标记来包含项目根目录的路径，以防止它忽略不同环境中可能具有不同根目录的所有文件。示例：`["<rootDir>/node_modules/"]`。
+
+即使此处未指定任何内容，观察者也会忽略对任何隐藏文件和目录的更改，即以点 (`.`) 开头的文件和文件夹。
+
+### `watchPlugins` [array\<string | [string, Object]\>]
+
+默认值：`[]`
+
+此选项允许你使用自定义 watch 插件。在[此处](https://jestjs.io/docs/watch-plugins)阅读有关 watch 插件的更多信息。
+
+watch 插件的例子：
+
+- [jest-watch-master](https://github.com/rickhanlonii/jest-watch-master)
+- [jest-watch-select-projects](https://github.com/jest-community/jest-watch-select-projects)
+- [jest-watch-suspend](https://github.com/unional/jest-watch-suspend)
+- [jest-watch-typeahead](https://github.com/jest-community/jest-watch-typeahead)
+- [jest-watch-yarn-workspaces](https://github.com/cameronhunter/jest-watch-directories/tree/master/packages/jest-watch-yarn-workspaces)
+
+_注意：`watchPlugins` 属性值中的值可以省略包名称的 `jest-watch-` 前缀。_
+
+### `watchman` [boolean]
+
+默认值：`true`
+
+是否使用 [`watchman`](https://facebook.github.io/watchman/) 进行文件抓取。
+
+### `//` [string]
+
+没有默认值
+
+此选项允许在 `package.json` 中添加注释。在 `package.json` 中的任何位置包含注释文本作为此键的值。
+
+```json
+{
+  "name": "my-project",
+  "jest": {
+    "//": "Comment goes here",
+    "verbose": true
+  }
+}
+```
+
+[上一章-The Jest Object](/apis/TheJestObject.md)
+
+[下一章-Jest Cli Options](/apis/JestCliOptions.md)
