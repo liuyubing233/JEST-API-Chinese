@@ -70,7 +70,7 @@ type TransformedSource =
 // RawSourceMap 来自 https://github.com/mozilla/source-map/blob/0.6.1/source-map.d.ts#L6-L12
 ```
 
-可以看出，只有 `process` 是必须实现的，尽管我们强烈建议也实现 `getCacheKey`，因此，当我们可以从磁盘读取先前的结果时，我们不会浪费资源来转译相同的源文件。您可以使用 [`@jest/create-cache-key-function`](https://www.npmjs.com/package/@jest/create-cache-key-function) 来协助实现它。
+可以看出，只有 `process` 是必须实现的，尽管我们强烈建议也实现 `getCacheKey`，因此，当我们可以从磁盘读取先前的结果时，我们不会浪费资源来转译相同的源文件。你可以使用 [`@jest/create-cache-key-function`](https://www.npmjs.com/package/@jest/create-cache-key-function) 来协助实现它。
 
 请注意，[ECMAScript 模块](https://jestjs.io/docs/ecmascript-modules)支持由传入的 `supports*` 选项指示。具体来说 `supportsDynamicImport: true` 表示转换器可以返回 `import()` 表达式，ESM 和 CJS 都支持。如果 `supportsStaticESM: true` 表示支持顶级 `import`​​ 语句，并且代码将被解释为 ESM 而不是 CJS。有关差异的详细信息，请参阅 Node 的[文档](https://nodejs.org/api/esm.html#esm_differences_between_es_modules_and_commonjs)。
 
